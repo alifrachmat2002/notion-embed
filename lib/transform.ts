@@ -1,6 +1,4 @@
-const COLORS = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"] as const;
-
-function getIntensity(count: number) {
+function getLevel(count: number) {
     if (count === 0) return 0;
     if (count === 1) return 1;
     if (count <= 3) return 2;
@@ -8,11 +6,19 @@ function getIntensity(count: number) {
     return 4;
 }
 
-export function workoutsToContributions(
+function formatDate(date: Date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+        2,
+        "0",
+    )}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+export function workoutsToCalendarData(
     workouts: {
         date: string;
         completed: boolean;
     }[],
+    year = new Date().getFullYear(),
 ) {
     const grouped = new Map<string, number>();
 
@@ -22,14 +28,27 @@ export function workoutsToContributions(
         grouped.set(workout.date, (grouped.get(workout.date) ?? 0) + 1);
     }
 
-    return Array.from(grouped.entries()).map(([date, count]) => {
-        const intensity = getIntensity(count);
+    const result = [];
 
-        return {
+    const startDate = new Date(year, 0, 1);
+    const endDate = new Date(year, 11, 31);
+
+    for (
+        let current = new Date(startDate);
+        current <= endDate;
+        current.setDate(current.getDate() + 1)
+    ) {
+        // const date = current.toISOString().split("T")[0];
+        const date = formatDate(current);
+
+        const count = grouped.get(date) ?? 0;
+
+        result.push({
             date,
             count,
-            intensity,
-            color: COLORS[intensity],
-        };
-    });
+            level: getLevel(count),
+        });
+    }
+
+    return result;
 }
