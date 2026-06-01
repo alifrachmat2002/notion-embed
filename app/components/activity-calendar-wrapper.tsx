@@ -5,8 +5,8 @@ import { ActivityCalendar } from "react-activity-calendar";
 import "react-activity-calendar/tooltips.css";
 
 const theme = {
-    light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-    dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+    light: ["#2a2a2c", "#0e4429", "#006d32", "#26a641", "#39d353"],
+    dark: ["#2a2a2c", "#0e4429", "#006d32", "#26a641", "#39d353"],
 };
 
 export default function ActivityCalendarWrapper({ data, loading }: { data: any[], loading: boolean }) {
