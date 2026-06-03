@@ -1,6 +1,7 @@
 import { getWorkouts } from "@/lib/notion";
 import { workoutsToCalendarData } from "@/lib/transform";
 import ActivityCalendarWrapper from "./components/activity-calendar-wrapper";
+import ManualRefreshButton from "./components/manual-refresh-button";
 
 export default async function Home() {
 
@@ -14,7 +15,9 @@ export default async function Home() {
   console.log(workouts[0]);
 
   return (
-    <ActivityCalendarWrapper data={contributions} loading={!workouts} />
-    // <GithubContributionChart contributions={contributions} />
+    <>
+      <ActivityCalendarWrapper data={contributions} loading={!workouts} />
+      <ManualRefreshButton />
+    </>
   );
 }
