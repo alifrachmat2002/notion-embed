@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     }
 
     revalidatePath("/");
+    revalidatePath("/muscles");
 
     return Response.json({
         ok: true,
