@@ -12,13 +12,15 @@ export function MuscleHeatmap({ volume }: Props) {
     const intensity = normalizeIntensity(volume);
 
     return (
-        <div className="flex gap-2">
-            <div className="w-1/2 max-w-[360px]">
-                <FrontMuscleMap intensity={intensity} />
-            </div>
+        <div className="w-full">
+            <div className="flex justify-center gap-4">
+                <div className="w-full max-w-[260px]">
+                    <FrontMuscleMap intensity={intensity} />
+                </div>
 
-            <div className="w-1/2 max-w-[360px]">
-                <BackMuscleMap intensity={intensity} />
+                <div className="w-full max-w-[260px]">
+                    <BackMuscleMap intensity={intensity} />
+                </div>
             </div>
         </div>
     );
