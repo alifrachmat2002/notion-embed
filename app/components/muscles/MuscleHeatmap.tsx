@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FrontMuscleMap } from "./FrontMuscleMap";
-import { BackMuscleMap } from "./BackMuscleMap";
+import { MuscleBodyMap } from "./MuscleBodyMap";
 import { MuscleVolume, HeatmapMuscle } from "@/types/muscle";
 import { normalizeIntensity } from "@/lib/muscles/normalize-intensity";
 
@@ -39,25 +38,12 @@ export function MuscleHeatmap({ volume }: Props) {
 
     return (
         <div className="w-full relative">
-            <div className="flex justify-center gap-4">
-                <div className="w-full max-w-[260px]">
-                    <FrontMuscleMap
-                        intensity={intensity}
-                        hoveredMuscle={hoveredMuscle}
-                        onHover={handleHover}
-                        onLeave={handleLeave}
-                    />
-                </div>
-
-                <div className="w-full max-w-[260px]">
-                    <BackMuscleMap
-                        intensity={intensity}
-                        hoveredMuscle={hoveredMuscle}
-                        onHover={handleHover}
-                        onLeave={handleLeave}
-                    />
-                </div>
-            </div>
+            <MuscleBodyMap
+                intensity={intensity}
+                hoveredMuscle={hoveredMuscle}
+                onHover={handleHover}
+                onLeave={handleLeave}
+            />
 
             {tooltip && (
                 <div
