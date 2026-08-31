@@ -14,7 +14,7 @@ export function calculateMuscleVolume(workouts: WorkoutEntry[]): MuscleVolume {
     };
 
     for (const workout of workouts) {
-        const mapped = MUSCLE_TO_HEATMAP[workout.muscle];
+        const mapped = workout.muscle ? MUSCLE_TO_HEATMAP[workout.muscle] : undefined;
 
         if (!mapped) continue;
 
