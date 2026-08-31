@@ -1,11 +1,11 @@
-import { revalidatePath } from "next/cache";
+import { revalidateWorkoutViews } from "@/lib/revalidate";
 
 export async function POST() {
-    revalidatePath("/");
+    const revalidated = revalidateWorkoutViews();
 
     return Response.json({
         ok: true,
-        revalidated: "/",
+        revalidated,
         at: new Date().toISOString(),
     });
 }
