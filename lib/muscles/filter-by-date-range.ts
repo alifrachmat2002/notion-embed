@@ -1,9 +1,22 @@
+import { DateRangeValue } from "@/types/date-range";
 import { WorkoutEntry } from "@/types/workout";
 
-export function filterByDateRange(workouts: WorkoutEntry[], days: 7 | 30 | 90) {
-    const cutoff = new Date();
+/**
+ * Keep the workouts falling within `range` days of `now`; `"all"` keeps every
+ * dated workout. `now` is injectable so range boundaries are testable.
+ */
+export function filterByDateRange(
+    workouts: WorkoutEntry[],
+    range: DateRangeValue,
+    now: Date = new Date(),
+) {
+    if (range === "all") {
+        return workouts.filter((workout) => Boolean(workout.date));
+    }
 
-    cutoff.setDate(cutoff.getDate() - days);
+    const cutoff = new Date(now);
+
+    cutoff.setDate(cutoff.getDate() - range);
 
     return workouts.filter((workout) => {
         if (!workout.date) return false;
