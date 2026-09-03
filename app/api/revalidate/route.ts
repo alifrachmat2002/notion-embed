@@ -1,6 +1,6 @@
 // app/api/revalidate/route.ts
-import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
+import { revalidateWorkoutViews } from "@/lib/revalidate";
 
 export async function POST(request: NextRequest) {
     let body: { secret?: string };
@@ -15,12 +15,11 @@ export async function POST(request: NextRequest) {
         return Response.json({ ok: false }, { status: 401 });
     }
 
-    revalidatePath("/");
-    revalidatePath("/muscles");
+    const revalidated = revalidateWorkoutViews();
 
     return Response.json({
         ok: true,
-        revalidated: "/",
+        revalidated,
         at: new Date().toISOString(),
     });
 }
