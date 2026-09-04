@@ -5,9 +5,17 @@ export const GRID = "#2a2a2c";
 export const SURFACE = "#1c1c1e";
 export const BORDER = "rgba(255,255,255,0.08)";
 
-export const MAX_WEIGHT = "#39d353";
-export const STRENGTH_INDEX = "#58a6ff";
-export const VOLUME = "#26a641";
+const BRIGHT_GREEN = "#39d353";
+const GREEN = "#26a641";
+const BLUE = "#58a6ff";
+
+export const MAX_WEIGHT = BRIGHT_GREEN;
+export const STRENGTH_INDEX = BLUE;
+export const VOLUME = GREEN;
+
+/** Cardio reuses the palette: the measured series blue, the workload green. */
+export const PACE = BLUE;
+export const WEEKLY_DISTANCE = GREEN;
 
 /**
  * Colours for the rep scatter, one per weight lifted. Ordered light to dark so

@@ -20,6 +20,8 @@ function page(overrides: Record<string, unknown> = {}) {
             Exercise: { select: { name: "Hammer Curl" } },
             Weight: { number: 6.5 },
             Reps: { number: 40 },
+            "Distance (km)": { number: null },
+            "Duration(min)": { number: null },
             ...overrides,
         },
     };
@@ -36,7 +38,43 @@ describe("parseWorkoutPage", () => {
             exercise: "Hammer Curl",
             weight: 6.5,
             reps: 40,
+            distanceKm: null,
+            durationMin: null,
         });
+    });
+
+    it("reads the distance and duration a run records", () => {
+        const parsed = parseWorkoutPage(
+            page({
+                "Activity Type": { select: { name: "Cardio" } },
+                Name: { title: [{ plain_text: "Easy 7km Run @ 7:59/km" }] },
+                Exercise: { select: { name: "Running" } },
+                Weight: { number: null },
+                Reps: { number: null },
+                "Distance (km)": { number: 7 },
+                "Duration(min)": { number: 55.95 },
+            }),
+        );
+
+        expect(parsed).toMatchObject({ distanceKm: 7, durationMin: 55.95 });
+    });
+
+    /**
+     * Six August runs record duration but no distance. Parsed as 0 they would
+     * read as a zero-kilometre run and divide into an infinite pace, so the
+     * gap has to stay distinguishable from a logged value.
+     */
+    it("keeps a run's unset distance distinguishable as null", () => {
+        const parsed = parseWorkoutPage(
+            page({
+                "Activity Type": { select: { name: "Cardio" } },
+                Exercise: { select: { name: "Running" } },
+                "Distance (km)": { number: null },
+                "Duration(min)": { number: 30 },
+            }),
+        );
+
+        expect(parsed).toMatchObject({ distanceKm: null, durationMin: 30 });
     });
 
     it("joins a title split across rich-text fragments", () => {
