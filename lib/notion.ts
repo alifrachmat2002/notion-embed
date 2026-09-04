@@ -17,6 +17,10 @@ function parseTitle(property: TitleProperty | undefined): string {
 // deliberately not read: Notion computes them across every record, so they bake
 // in the timed-hold and missing-rep artifacts that lib/analytics filters out.
 // Both quantities are recomputed there instead, after hygiene filtering.
+//
+// `RPE`, `Cardio Type` and `Workout Type` are not read either. Across the whole
+// log RPE is empty on every record, and the other two carry a single value
+// ("Running", "Easy Run"), so reading them would add fields no view can use.
 export function parseWorkoutPage(page: any): WorkoutEntry | null {
     const date = page.properties.Date.date?.start;
 
@@ -34,6 +38,8 @@ export function parseWorkoutPage(page: any): WorkoutEntry | null {
         exercise: page.properties.Exercise.select?.name ?? null,
         weight: page.properties.Weight.number,
         reps: page.properties.Reps.number,
+        distanceKm: page.properties["Distance (km)"].number,
+        durationMin: page.properties["Duration(min)"].number,
     };
 }
 

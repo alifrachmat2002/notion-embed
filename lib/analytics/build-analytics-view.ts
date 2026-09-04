@@ -1,3 +1,4 @@
+import { isCardioRecord } from "@/lib/cardio/is-cardio";
 import { filterByDateRange } from "@/lib/muscles/filter-by-date-range";
 import { workoutsToCalendarData } from "@/lib/transform";
 import { WorkoutEntry } from "@/types/workout";
@@ -26,7 +27,7 @@ export function buildAnalyticsView(
     workouts: WorkoutEntry[],
     { exercise, range, now = new Date() }: AnalyticsOptions,
 ): AnalyticsView {
-    const strength = workouts.filter(isStrengthRecord(cardioExercises(workouts)));
+    const strength = workouts.filter(isStrengthRecord(isCardioRecord(workouts)));
 
     const exercises = listExercises(strength);
     const selected = resolveSelection(exercise, exercises);
@@ -86,32 +87,16 @@ function diagnose(
 }
 
 /**
- * Every exercise ever logged as cardio.
- *
- * Activity type is set per record, and a handful of runs are mistagged as
- * strength. Excluding by activity type alone would let those two records drag
- * Running into the exercise selector, so the exercise itself is judged cardio
- * if it is ever logged that way.
+ * Cardio records distance and duration rather than weight and reps, so it has
+ * nothing the weight/rep/volume panels can plot. `/cardio` charts it instead,
+ * off the same shared rule for what counts as a run.
  */
-function cardioExercises(workouts: WorkoutEntry[]): Set<string> {
-    return new Set(
-        workouts
-            .filter((workout) => workout.activityType === "Cardio")
-            .map((workout) => workout.exercise)
-            .filter((exercise): exercise is string => exercise !== null),
-    );
-}
-
-/**
- * Cardio carries distance, duration and RPE rather than weight and reps, so it
- * has nothing the weight/rep/volume panels can plot.
- */
-function isStrengthRecord(cardio: Set<string>) {
+function isStrengthRecord(isCardio: (workout: WorkoutEntry) => boolean) {
     return (workout: WorkoutEntry): boolean =>
         workout.completed &&
         Boolean(workout.date) &&
         workout.activityType === "Strength" &&
-        !cardio.has(workout.exercise ?? "");
+        !isCardio(workout);
 }
 
 /**

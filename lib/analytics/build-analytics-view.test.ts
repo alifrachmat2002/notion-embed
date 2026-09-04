@@ -14,6 +14,8 @@ function workout(overrides: Partial<WorkoutEntry> = {}): WorkoutEntry {
         exercise: "Goblet Squat",
         weight: 7,
         reps: 12,
+        distanceKm: null,
+        durationMin: null,
         ...overrides,
     };
 }
