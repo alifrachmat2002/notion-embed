@@ -1,7 +1,4 @@
-// `CalendarActivity` is shared with the analytics view rather than restated:
-// both feed the same activity calendar. Typing that seam properly is its own
-// open ticket, .scratch/architecture-review/issues/03-typed-calendar-activity-seam.md.
-import { CalendarActivity } from "@/lib/analytics/types";
+import { CalendarActivity } from "@/types/calendar";
 import { DateRangeValue } from "@/types/date-range";
 
 /** A run that survived hygiene filtering, so its numbers can be relied on. */

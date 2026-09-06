@@ -1,3 +1,4 @@
+import { CalendarActivity } from "@/types/calendar";
 import { DateRangeValue } from "@/types/date-range";
 
 /** Analytics periods, longest last. `/muscles` keeps its own 7/30/90 list. */
@@ -94,12 +95,6 @@ export type Exclusions = {
 
 /** Why an exercise has nothing to plot, so the page can say so. */
 export type UnchartableReason = "all-holds" | "no-reps" | "none-in-period";
-
-export type CalendarActivity = {
-    date: string;
-    count: number;
-    level: number;
-};
 
 export type AnalyticsView = {
     exercises: ExerciseOption[];

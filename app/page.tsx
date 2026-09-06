@@ -7,16 +7,11 @@ export default async function Home() {
 
   const workouts = await getWorkouts();
 
-  const contributions =
-    workoutsToCalendarData(workouts);
-
-  console.log(contributions[contributions.length - 1]);
-
-  console.log(workouts[0]);
+  const calendar = workoutsToCalendarData(workouts);
 
   return (
     <>
-      <ActivityCalendarWrapper data={contributions} loading={!workouts} />
+      <ActivityCalendarWrapper data={calendar} loading={!workouts} />
       <ManualRefreshButton />
     </>
   );
