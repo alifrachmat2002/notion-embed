@@ -4,6 +4,13 @@ A personal fitness tracker reading a Notion database of logged sets, surfaced th
 
 ## Language
 
+**Dashboard**:
+A full-page analytics view built from one shell: a title, a row of page-level controls, a row of stat cards, and titled panels below. `/analytics` and `/cardio` are the two, and there are no others — `/` is an embed and `/muscles` is a heatmap page, and neither shares the shell.
+_Avoid_: "dashboard" for `/` or `/muscles`; "the analytics page" when both dashboards are meant.
+
+**Dashboard chrome**:
+The furniture the dashboards share, as opposed to the figures they show: the panel frame, the stat-card grid, the period control, the chart palette. Chrome belongs to no one dashboard — anything only one of them uses is that dashboard's own, however similar it looks to the other's.
+
 **Consistency calendar**:
 The GitHub-style day-grid showing training frequency across one calendar year, as the user sees it — `/`'s heading is unlabelled, `/analytics` and `/cardio` both title it "Consistency". Always a whole named year, January to December; never a rolling window.
 _Avoid_: "activity calendar" outside the rendering layer, "contributions" (GitHub's word; means nothing in a fitness log), "the last year" for its window (it shows a year, not a trailing period).
