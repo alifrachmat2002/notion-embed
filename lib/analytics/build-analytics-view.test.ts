@@ -392,6 +392,20 @@ describe("consistency calendar", () => {
         ).toBe(3);
     });
 
+    it("shows the year it is asked for, not the year it is", () => {
+        const result = buildAnalyticsView(sets(3, { date: "2025-08-01" }), {
+            exercise: null,
+            range: "all",
+            year: 2025,
+            now: NOW,
+        });
+
+        expect(result.calendarYear).toBe(2025);
+        expect(
+            result.calendar.find((day) => day.date === "2025-08-01")?.count,
+        ).toBe(3);
+    });
+
     it("counts only the selected exercise", () => {
         const result = view(
             [

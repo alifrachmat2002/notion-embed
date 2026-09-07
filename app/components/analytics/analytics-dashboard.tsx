@@ -10,6 +10,8 @@ import {
 } from "@/lib/analytics/types";
 import { WorkoutEntry } from "@/types/workout";
 import ActivityCalendarWrapper from "../activity-calendar-wrapper";
+import { CalendarYearPicker } from "../calendar-year-picker";
+import { useCalendarYear } from "../use-calendar-year";
 import { Panel } from "./panel";
 import { RepChart } from "./rep-chart";
 import { StatCards } from "./stat-cards";
@@ -30,9 +32,11 @@ export default function AnalyticsDashboard({
     const [exercise, setExercise] = useState<string | null>(null);
     const [range, setRange] = useState<AnalyticsRange>(90);
 
+    const { years, year, setYear } = useCalendarYear();
+
     const view = useMemo(
-        () => buildAnalyticsView(workouts, { exercise, range }),
-        [workouts, exercise, range],
+        () => buildAnalyticsView(workouts, { exercise, range, year }),
+        [workouts, exercise, range, year],
     );
 
     const chartsEmpty = explain(view.unchartable, view.kind === "bodyweight");
@@ -118,6 +122,13 @@ export default function AnalyticsDashboard({
             <Panel
                 title="Exercise Consistency"
                 hint={`Days you performed this exercise in ${view.calendarYear}. Shows the full year regardless of the period above.`}
+                action={
+                    <CalendarYearPicker
+                        years={years}
+                        selected={year}
+                        onSelect={setYear}
+                    />
+                }
             >
                 <ActivityCalendarWrapper data={view.calendar} loading={false} />
             </Panel>

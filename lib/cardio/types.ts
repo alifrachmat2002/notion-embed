@@ -73,6 +73,11 @@ export type CardioView = {
 
 export type CardioOptions = {
     range: DateRangeValue;
+    /**
+     * Which calendar year the consistency panel shows, independent of `range`.
+     * Defaults to the current one — see docs/adr/0001 for why that stands.
+     */
+    year?: number;
     /** Injectable clock, so range boundaries and the calendar year are testable. */
     now?: Date;
 };

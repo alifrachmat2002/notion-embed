@@ -15,12 +15,21 @@ function formatDate(date: Date) {
     )}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
+/**
+ * One calendar year of training, every day present whether trained or not.
+ *
+ * `year` is required on purpose. It defaulted to the current year *here* once,
+ * where no caller could see it happening, and that is how three views silently
+ * agreed to empty themselves on January 1st. The view builders above still
+ * default to the current year, but they do it in the open as a product
+ * decision — see docs/adr/0001.
+ */
 export function workoutsToCalendarData(
     workouts: {
         date: string;
         completed: boolean;
     }[],
-    year = new Date().getFullYear(),
+    year: number,
 ): CalendarActivity[] {
     const grouped = new Map<string, number>();
 

@@ -10,6 +10,8 @@ import {
 } from "@/lib/analytics/types";
 import { WorkoutEntry } from "@/types/workout";
 import ActivityCalendarWrapper from "../activity-calendar-wrapper";
+import { CalendarYearPicker } from "../calendar-year-picker";
+import { useCalendarYear } from "../use-calendar-year";
 import { Panel } from "../analytics/panel";
 import { CardioStatCards } from "./cardio-stat-cards";
 import { PaceChart } from "./pace-chart";
@@ -28,9 +30,11 @@ export default function CardioDashboard({
 }) {
     const [range, setRange] = useState<AnalyticsRange>(90);
 
+    const { years, year, setYear } = useCalendarYear();
+
     const view = useMemo(
-        () => buildCardioView(workouts, { range }),
-        [workouts, range],
+        () => buildCardioView(workouts, { range, year }),
+        [workouts, range, year],
     );
 
     const chartsEmpty = explain(view.unchartable);
@@ -82,6 +86,13 @@ export default function CardioDashboard({
             <Panel
                 title="Running Consistency"
                 hint={`Days you ran in ${view.calendarYear}. Shows the full year regardless of the period above.`}
+                action={
+                    <CalendarYearPicker
+                        years={years}
+                        selected={year}
+                        onSelect={setYear}
+                    />
+                }
             >
                 <ActivityCalendarWrapper
                     data={view.calendar}

@@ -25,13 +25,13 @@ import {
  */
 export function buildAnalyticsView(
     workouts: WorkoutEntry[],
-    { exercise, range, now = new Date() }: AnalyticsOptions,
+    { exercise, range, year, now = new Date() }: AnalyticsOptions,
 ): AnalyticsView {
     const strength = workouts.filter(isStrengthRecord(isCardioRecord(workouts)));
 
     const exercises = listExercises(strength);
     const selected = resolveSelection(exercise, exercises);
-    const calendarYear = now.getFullYear();
+    const calendarYear = year ?? now.getFullYear();
 
     if (!selected) {
         return emptyView(exercises, calendarYear);

@@ -24,7 +24,7 @@ import {
  */
 export function buildCardioView(
     workouts: WorkoutEntry[],
-    { range, now = new Date() }: CardioOptions,
+    { range, year, now = new Date() }: CardioOptions,
 ): CardioView {
     // The cardio rule is derived from the whole log, then the period applied:
     // a run mistagged as strength is only recognisable by the company its
@@ -36,7 +36,7 @@ export function buildCardioView(
 
     const attended = filterByDateRange(runs, range, now);
     const usable = attended.filter(isUsable).map(toCardioRun);
-    const calendarYear = now.getFullYear();
+    const calendarYear = year ?? now.getFullYear();
 
     return {
         stats: summarise(attended, usable),
