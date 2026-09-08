@@ -1,23 +1,21 @@
 import { formatPace } from "@/lib/cardio/format-pace";
 import { CardioExclusions, CardioStats } from "@/lib/cardio/types";
+import { formatStatValue } from "@/lib/format-stat-value";
+import { StatCardGrid } from "../dashboard-chrome/stat-card-grid";
 
 type Props = {
     stats: CardioStats;
     exclusions: CardioExclusions;
 };
 
-function format(value: number): string {
-    if (value >= 10_000) return `${(value / 1000).toFixed(1)}k`;
-
-    return String(Math.round(value * 10) / 10);
-}
-
 export function CardioStatCards({ stats, exclusions }: Props) {
     const excluded = exclusions.missingDistance + exclusions.missingDuration;
 
     const cards = [
+        // Deliberately unabbreviated: a run count never reaches the thousands,
+        // and a log this size reading "10.0k" would be stranger than a wide card.
         { label: "Runs", value: String(stats.runs) },
-        { label: "Distance", value: format(stats.totalKm), unit: "km" },
+        { label: "Distance", value: formatStatValue(stats.totalKm), unit: "km" },
         {
             label: "Avg Pace",
             value: formatPace(stats.avgPaceMinPerKm),
@@ -31,33 +29,14 @@ export function CardioStatCards({ stats, exclusions }: Props) {
     ];
 
     return (
-        <div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {cards.map((card) => (
-                    <div
-                        key={card.label}
-                        className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
-                    >
-                        <p className="text-xs text-white/40">{card.label}</p>
-                        <p className="mt-1 text-2xl text-white tabular-nums">
-                            {card.value}
-                            {card.unit && (
-                                <span className="ml-1 text-sm text-white/40">
-                                    {card.unit}
-                                </span>
-                            )}
-                        </p>
-                    </div>
-                ))}
-            </div>
-
-            {excluded > 0 && (
-                <p className="mt-2 text-xs text-white/40">
-                    {excluded} of {stats.runs} runs excluded from these figures
-                    {describe(exclusions)}.
-                </p>
-            )}
-        </div>
+        <StatCardGrid
+            cards={cards}
+            footnote={
+                excluded > 0
+                    ? `${excluded} of ${stats.runs} runs excluded from these figures${describe(exclusions)}.`
+                    : null
+            }
+        />
     );
 }
 

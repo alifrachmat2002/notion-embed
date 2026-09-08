@@ -3,15 +3,16 @@
 import { useMemo, useState } from "react";
 import { buildCardioView } from "@/lib/cardio/build-cardio-view";
 import { CardioUnchartableReason } from "@/lib/cardio/types";
-import {
-    ANALYTICS_RANGES,
-    AnalyticsRange,
-    RANGE_LABELS,
-} from "@/lib/analytics/types";
 import { WorkoutEntry } from "@/types/workout";
 import ActivityCalendarWrapper from "../activity-calendar-wrapper";
 import { CalendarYearPicker } from "../dashboard-chrome/calendar-year-picker";
 import { Panel } from "../dashboard-chrome/panel";
+import {
+    DASHBOARD_PERIODS,
+    DashboardPeriod,
+    PERIOD_LABELS,
+    PeriodPicker,
+} from "../dashboard-chrome/period-picker";
 import { useCalendarYear } from "../dashboard-chrome/use-calendar-year";
 import { CardioStatCards } from "./cardio-stat-cards";
 import { PaceChart } from "./pace-chart";
@@ -28,7 +29,7 @@ export default function CardioDashboard({
 }: {
     workouts: WorkoutEntry[];
 }) {
-    const [range, setRange] = useState<AnalyticsRange>(90);
+    const [range, setRange] = useState<DashboardPeriod>(90);
 
     const { years, year, setYear } = useCalendarYear();
 
@@ -46,23 +47,12 @@ export default function CardioDashboard({
             </h1>
 
             <div className="flex flex-wrap items-center gap-2">
-                <div className="flex gap-1">
-                    {ANALYTICS_RANGES.map((value) => (
-                        <button
-                            key={String(value)}
-                            type="button"
-                            onClick={() => setRange(value)}
-                            className={[
-                                "h-9 rounded-md border border-white/10 px-3 text-sm transition",
-                                range === value
-                                    ? "bg-white/10 text-white"
-                                    : "text-white/50 hover:bg-white/5 hover:text-white",
-                            ].join(" ")}
-                        >
-                            {RANGE_LABELS[String(value)]}
-                        </button>
-                    ))}
-                </div>
+                <PeriodPicker
+                    periods={DASHBOARD_PERIODS}
+                    labels={PERIOD_LABELS}
+                    selected={range}
+                    onChange={setRange}
+                />
             </div>
 
             <CardioStatCards stats={view.stats} exclusions={view.exclusions} />

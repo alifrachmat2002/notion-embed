@@ -1,5 +1,6 @@
 import { filterByDateRange } from "@/lib/filter-by-date-range";
 import { isCardioRecord } from "@/lib/is-cardio";
+import { normalizeDate, orderByDate, round, sum } from "@/lib/series";
 import { workoutsToCalendarData } from "@/lib/transform";
 import { DateRangeValue } from "@/types/date-range";
 import { WorkoutEntry } from "@/types/workout";
@@ -220,25 +221,8 @@ function diagnose(
     return attended === 0 ? "none-in-period" : "no-distance";
 }
 
-function normalizeDate(date: string): string {
-    return date.slice(0, 10);
-}
-
-function orderByDate<T extends { date: string }>(points: T[]): T[] {
-    return points.sort((a, b) => a.date.localeCompare(b.date));
-}
-
-function sum(values: number[]): number {
-    return round(values.reduce((total, value) => total + value, 0));
-}
-
 function min<T extends number | string>(values: T[]): T | null {
     return values.length
         ? values.reduce((lowest, value) => (value < lowest ? value : lowest))
         : null;
-}
-
-/** Guard against float drift from fractional distances (3.69, 3.82). */
-function round(value: number): number {
-    return Math.round(value * 100) / 100;
 }
