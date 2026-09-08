@@ -321,6 +321,19 @@ describe("consistency calendar", () => {
         ).toBe(1);
     });
 
+    it("shows the year it is asked for, not the year it is", () => {
+        const result = buildCardioView([run({ date: "2025-08-01" })], {
+            range: "all",
+            year: 2025,
+            now: NOW,
+        });
+
+        expect(result.calendarYear).toBe(2025);
+        expect(
+            result.calendar.find((day) => day.date === "2025-08-01")?.count,
+        ).toBe(1);
+    });
+
     it("counts runs and not strength sets", () => {
         const result = view([
             run({ date: "2026-08-01" }),

@@ -1,9 +1,7 @@
 import { frontPaths } from "@/assets/front-paths";
 import { backPaths } from "@/assets/back-paths";
-import { FRONT_LOOKUP } from "@/lib/muscles/front-lookup";
-import { BACK_LOOKUP } from "@/lib/muscles/back-lookup";
-import { getMuscleColor } from "@/lib/muscles/get-muscle-colors";
-import { DEFAULT_BODY_COLOR } from "@/lib/muscles/muscle-colors";
+import { FRONT_LOOKUP, BACK_LOOKUP } from "@/lib/muscles/lookups";
+import { DEFAULT_BODY_COLOR, MUSCLE_COLORS } from "./muscle-colors";
 import { MuscleIntensity, HeatmapMuscle } from "@/types/muscle";
 
 type Props = {
@@ -34,7 +32,7 @@ export function MuscleBodyMap({ intensity, hoveredMuscle, onHover, onLeave }: Pr
                             const muscle = side.lookup[index] as HeatmapMuscle | undefined;
 
                             const fill = muscle
-                                ? getMuscleColor(intensity[muscle])
+                                ? MUSCLE_COLORS[intensity[muscle]]
                                 : DEFAULT_BODY_COLOR;
 
                             const isHovered = muscle && muscle === hoveredMuscle;

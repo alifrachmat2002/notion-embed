@@ -1,4 +1,4 @@
-Status: ready-for-agent
+Status: done
 
 # Fitness Analytics Dashboard
 
@@ -166,4 +166,21 @@ The existing logging structure is untouched. Every derived metric is computed fr
 
 **Worth doing in Notion, not in code.** Setting the exercise field on the nine unassigned records from the first session recovers that day for exercise views; filling the missing rep counts restores the bicep charts. Both are data entry, not structural change.
 
-**Related ticket.** The date-range parser described above closes `.scratch/architecture-review/issues/02-daterange-validation.md`. Migrating the muscle view onto the same parser is a small optional step; it can be left to that ticket if this work should stay narrow.
+**Related ticket.** ~~The date-range parser described above closes `.scratch/architecture-review/issues/02-daterange-validation.md`.~~ Corrected 2026-09-08: it did not. `DateRangeValue` was generalised to `number | "all"` as planned, but no parser shipped with this work — the dashboards hold their period in `useState` and never parse a query param, so the unchecked cast on `/muscles` survived untouched. Ticket 02 shipped the parser itself in `f0eb544`, scoped to `/muscles`' own presets rather than the generic "takes the caller's permitted values and a fallback" shape sketched here.
+
+## Closing record (2026-09-08)
+
+Shipped in `d9edbe4`. Closed retrospectively — the status line was left at `ready-for-agent` when the work landed and was spotted during a tracker review.
+
+**Verified against the code before closing**, rather than assumed from the commit message:
+
+- One public seam: `buildAnalyticsView` is the only function exported from `lib/analytics/build-analytics-view.ts`; every helper is internal, as the Testing Decisions required.
+- Hygiene rules present and exercised: cardio excluded via `isCardioRecord`, holds excluded from arithmetic but kept as sets, missing-rep and unassigned-exercise records handled, exclusion counts returned.
+- 36 tests on the builder, plus `lib/notion.test.ts` covering the four newly read properties including a timed-hold record — the "one quiet failure worth pinning down" the spec named. Vitest was introduced here as planned; the repo had no test runner before.
+- `/analytics` is in `WORKOUT_VIEW_PATHS` (`lib/revalidate.ts:3`), so it refreshes through the same manual path as the other views.
+
+**One implementation decision shipped only in part.** Under Selection and periods: *"The shared date-range type is generalised to admit an all-time value and gains a validating parser that takes the caller's permitted values and a fallback, replacing the current unchecked numeric cast."* The generalisation shipped; the parser did not, and the unchecked cast it was meant to replace survived on `/muscles` for another week. See the corrected Related ticket note above.
+
+**One rule was implemented tighter than written.** The spec says holds are identified by a title containing "hold"; the code also matches a bare seconds marker, because the same session logs both `(40s hold)` and `(40s)`. A faithful improvement, recorded here so it does not read as drift.
+
+**Left as accepted consequences**, per Further Notes: the default exercise is bodyweight so the dashboard opens at a maximum weight of zero, and the longer periods produce identical charts until the log passes six months.

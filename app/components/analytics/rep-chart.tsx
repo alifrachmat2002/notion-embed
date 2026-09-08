@@ -12,7 +12,7 @@ import {
     ZAxis,
 } from "recharts";
 import { ExerciseKind, RepPoint } from "@/lib/analytics/types";
-import { AXIS, GRID, shortDate, tooltipStyle, weightColour } from "./chart-theme";
+import { AXIS, GRID, shortDate, tooltipStyle, weightColour } from "../dashboard-chrome/chart-theme";
 
 type Mark = RepPoint & { t: number };
 

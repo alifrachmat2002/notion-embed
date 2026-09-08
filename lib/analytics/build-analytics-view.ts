@@ -1,5 +1,6 @@
-import { isCardioRecord } from "@/lib/cardio/is-cardio";
-import { filterByDateRange } from "@/lib/muscles/filter-by-date-range";
+import { filterByDateRange } from "@/lib/filter-by-date-range";
+import { isCardioRecord } from "@/lib/is-cardio";
+import { normalizeDate, orderByDate, round, sum } from "@/lib/series";
 import { workoutsToCalendarData } from "@/lib/transform";
 import { WorkoutEntry } from "@/types/workout";
 import {
@@ -25,13 +26,13 @@ import {
  */
 export function buildAnalyticsView(
     workouts: WorkoutEntry[],
-    { exercise, range, now = new Date() }: AnalyticsOptions,
+    { exercise, range, year, now = new Date() }: AnalyticsOptions,
 ): AnalyticsView {
     const strength = workouts.filter(isStrengthRecord(isCardioRecord(workouts)));
 
     const exercises = listExercises(strength);
     const selected = resolveSelection(exercise, exercises);
-    const calendarYear = now.getFullYear();
+    const calendarYear = year ?? now.getFullYear();
 
     if (!selected) {
         return emptyView(exercises, calendarYear);
@@ -304,27 +305,10 @@ function emptyView(
     };
 }
 
-function normalizeDate(date: string): string {
-    return date.slice(0, 10);
-}
-
-function orderByDate<T extends { date: string }>(points: T[]): T[] {
-    return points.sort((a, b) => a.date.localeCompare(b.date));
-}
-
 function unique(values: string[]): string[] {
     return [...new Set(values)];
 }
 
-function sum(values: number[]): number {
-    return round(values.reduce((total, value) => total + value, 0));
-}
-
 function max(values: number[]): number | null {
     return values.length ? Math.max(...values) : null;
-}
-
-/** Guard against float drift from fractional dumbbell weights (5.5, 6.5). */
-function round(value: number): number {
-    return Math.round(value * 100) / 100;
 }

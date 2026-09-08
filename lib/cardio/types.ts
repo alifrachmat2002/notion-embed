@@ -1,7 +1,4 @@
-// `CalendarActivity` is shared with the analytics view rather than restated:
-// both feed the same activity calendar. Typing that seam properly is its own
-// open ticket, .scratch/architecture-review/issues/03-typed-calendar-activity-seam.md.
-import { CalendarActivity } from "@/lib/analytics/types";
+import { CalendarActivity } from "@/types/calendar";
 import { DateRangeValue } from "@/types/date-range";
 
 /** A run that survived hygiene filtering, so its numbers can be relied on. */
@@ -76,6 +73,11 @@ export type CardioView = {
 
 export type CardioOptions = {
     range: DateRangeValue;
+    /**
+     * Which calendar year the consistency panel shows, independent of `range`.
+     * Defaults to the current one — see docs/adr/0001 for why that stands.
+     */
+    year?: number;
     /** Injectable clock, so range boundaries and the calendar year are testable. */
     now?: Date;
 };

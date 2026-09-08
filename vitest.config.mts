@@ -8,6 +8,8 @@ export default defineConfig({
         // Node, not jsdom: the tested seam is pure functions over workout
         // records. Components hold no logic once the view model is built.
         environment: "node",
-        include: ["lib/**/*.test.ts"],
+        // `types/` is mostly declarations, but the parsers that guard a shape
+        // live beside it (see types/calendar.ts), and those are testable.
+        include: ["lib/**/*.test.ts", "types/**/*.test.ts"],
     },
 });

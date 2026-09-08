@@ -1,17 +1,5 @@
+import { CalendarActivity } from "@/types/calendar";
 import { DateRangeValue } from "@/types/date-range";
-
-/** Analytics periods, longest last. `/muscles` keeps its own 7/30/90 list. */
-export const ANALYTICS_RANGES = [28, 90, 180, 365, "all"] as const;
-
-export type AnalyticsRange = (typeof ANALYTICS_RANGES)[number];
-
-export const RANGE_LABELS: Record<string, string> = {
-    "28": "4 weeks",
-    "90": "3 months",
-    "180": "6 months",
-    "365": "1 year",
-    all: "All time",
-};
 
 /**
  * Whether an exercise is loaded externally or by bodyweight alone.
@@ -95,12 +83,6 @@ export type Exclusions = {
 /** Why an exercise has nothing to plot, so the page can say so. */
 export type UnchartableReason = "all-holds" | "no-reps" | "none-in-period";
 
-export type CalendarActivity = {
-    date: string;
-    count: number;
-    level: number;
-};
-
 export type AnalyticsView = {
     exercises: ExerciseOption[];
     /** The resolved selection: the requested exercise, or the default. */
@@ -121,6 +103,11 @@ export type AnalyticsView = {
 export type AnalyticsOptions = {
     exercise: string | null;
     range: DateRangeValue;
+    /**
+     * Which calendar year the consistency panel shows, independent of `range`.
+     * Defaults to the current one — see docs/adr/0001 for why that stands.
+     */
+    year?: number;
     /** Injectable clock, so range boundaries and the calendar year are testable. */
     now?: Date;
 };

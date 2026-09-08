@@ -3,6 +3,7 @@
 
 import { ActivityCalendar } from "react-activity-calendar";
 import "react-activity-calendar/tooltips.css";
+import { CalendarActivity } from "@/types/calendar";
 
 const theme = {
     light: ["#2a2a2c", "#0e4429", "#006d32", "#26a641", "#39d353"],
@@ -19,7 +20,7 @@ export default function ActivityCalendarWrapper({
     loading,
     unit = { one: "set", many: "sets" },
 }: {
-    data: any[];
+    data: CalendarActivity[];
     loading: boolean;
     unit?: { one: string; many: string };
 }) {
