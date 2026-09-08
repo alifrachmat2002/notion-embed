@@ -22,6 +22,14 @@ Which calendar year a consistency calendar is showing. Every view defaults to th
 Which of the three periods `/muscles` offers — 7, 30 or 90 days back from today — the heatmap is showing. Carried in `?range=`, defaulting to 7; a request for any other number falls back to the default rather than erroring, because `/muscles` is an embed.
 _Avoid_: "period control" for its selector (that phrase belongs to dashboard chrome, and `/muscles` is not a dashboard — see `docs/adr/0002`); "date range", which is `DateRangeValue`, the wider type `lib/` filters by and which admits any day count.
 
+**Muscle volume**:
+How much work a muscle group has taken over a muscle range, counted in sets — one logged set is one unit, whatever weight or reps are on it. Only sets actually completed count; a session planned and left unticked is not volume.
+_Avoid_: bare "volume" where the analytics figure is also in view — that one is weight × reps, a different quantity wearing the same word.
+
+**Muscle intensity / `MuscleLevel`, `MuscleIntensity`**:
+Which of five shading buckets a group's muscle volume falls into on the heatmap, `0` (untrained) through `4` (heaviest). A `MuscleLevel` is one group's bucket; a `MuscleIntensity` is all six groups' at once, which is what the body map paints from. The same 0–4 convention as a calendar day, on its own thresholds, because the two grade different things: a calendar day grades one day against your other days, an intensity grades a whole range's work on one muscle.
+_Avoid_: reading a level as an amount — it is a bucket, and the set count behind it is the amount.
+
 **Activity calendar**:
 The rendering-layer name for the same grid — the `ActivityCalendarWrapper` component and the underlying `react-activity-calendar` library both use this word. Fine at that layer; not the term to reach for anywhere else.
 

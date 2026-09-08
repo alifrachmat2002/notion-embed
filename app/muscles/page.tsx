@@ -1,7 +1,6 @@
 import { MuscleHeatmap } from "../components/muscles/MuscleHeatmap";
 import { getWorkouts } from "@/lib/notion";
-import { calculateMuscleVolume } from "@/lib/muscles/calculate-muscle-volume";
-import { filterByDateRange } from "@/lib/filter-by-date-range";
+import { buildMuscleHeatmap } from "@/lib/muscles/build-muscle-heatmap";
 import { parseDateRange } from "@/types/date-range";
 import { RangeSelector } from "../components/range-selector";
 import ManualRefreshButton from "../components/manual-refresh-button";
@@ -21,14 +20,13 @@ export default async function Muscles({ searchParams }: Props) {
     const range = parseDateRange(params.range);
     const workouts = await getWorkouts();
 
-    const filtered = filterByDateRange(workouts, range);
+    const heatmap = buildMuscleHeatmap(workouts, range);
 
-    const volume = calculateMuscleVolume(filtered);
     return (
         <>
             <RangeSelector selected={range} />
             <ManualRefreshButton />
-            <MuscleHeatmap volume={volume} />
+            <MuscleHeatmap heatmap={heatmap} />
         </>
     );
 }

@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { MuscleBodyMap } from "./MuscleBodyMap";
-import { MuscleVolume, HeatmapMuscle } from "@/types/muscle";
-import { normalizeIntensity } from "@/lib/muscles/normalize-intensity";
+import { MuscleHeatmapData, HeatmapMuscle } from "@/types/muscle";
 
 type Props = {
-    volume: MuscleVolume;
+    heatmap: MuscleHeatmapData;
 };
 
 interface TooltipState {
@@ -16,8 +15,7 @@ interface TooltipState {
     y: number;
 }
 
-export function MuscleHeatmap({ volume }: Props) {
-    const intensity = normalizeIntensity(volume);
+export function MuscleHeatmap({ heatmap }: Props) {
     const [hoveredMuscle, setHoveredMuscle] = useState<HeatmapMuscle | null>(null);
     const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
@@ -25,7 +23,7 @@ export function MuscleHeatmap({ volume }: Props) {
         setHoveredMuscle(muscle);
         setTooltip({
             name: muscle.charAt(0).toUpperCase() + muscle.slice(1),
-            sets: volume[muscle] || 0,
+            sets: heatmap.volume[muscle],
             x: e.clientX,
             y: e.clientY,
         });
@@ -39,7 +37,7 @@ export function MuscleHeatmap({ volume }: Props) {
     return (
         <div className="w-full relative">
             <MuscleBodyMap
-                intensity={intensity}
+                intensity={heatmap.intensity}
                 hoveredMuscle={hoveredMuscle}
                 onHover={handleHover}
                 onLeave={handleLeave}
