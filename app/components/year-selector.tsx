@@ -12,10 +12,15 @@ type Props = {
  * year is a query param, so choosing one is a navigation. The dashboards hold
  * the whole log client-side and use `CalendarYearPicker` instead — two
  * mechanisms, because the two routes genuinely render differently.
+ *
+ * In normal flow, not pinned: the calendar labels its columns by month across
+ * the full width, so anything floating along the top edge covers one end or the
+ * other. `pl-9` leaves the corner to `ManualRefreshButton`, which is still
+ * fixed there.
  */
 export function YearSelector({ years, selected }: Props) {
     return (
-        <div className="fixed top-0 left-9 z-50 flex gap-1">
+        <div className="flex gap-1 pl-9">
             {years.map((year) => {
                 const active = selected === year;
 
