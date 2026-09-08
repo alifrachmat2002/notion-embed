@@ -1,4 +1,4 @@
-Status: ready-for-agent
+Status: done
 
 # Share the dashboard chrome between /analytics and /cardio
 
@@ -32,6 +32,31 @@ So `/cardio` didn't introduce the disease; it inherited a codebase where "shared
 **Two corrections to the original text.** `round`'s doc comment is *not* verbatim — analytics cites fractional dumbbell weights, cardio fractional distances. And "all three clones work and are covered" is half true: the builder helpers are exercised through the view-builder tests, but the stat cards and the range toolbar have **no coverage at all**, because this repo has no component tests by decision (see Out of scope).
 
 **The "one public export per logic module" rule cited in the original counter-argument is not documented anywhere.** It is a pattern `lib/muscles/` happens to follow, not a standard, and it does not constrain this work.
+
+## Files (as implemented)
+
+*Moved, unchanged (commit 1):*
+
+- `app/components/dashboard-chrome/panel.tsx`, `chart-theme.ts` — out of the analytics folder; chart-theme's doc comment gained the one-palette rationale
+- `app/components/dashboard-chrome/calendar-year-picker.tsx`, `use-calendar-year.ts` — out of the components root
+- `lib/filter-by-date-range.ts` — out of `lib/muscles/`
+- `lib/is-cardio.ts`, `lib/is-cardio.test.ts` — out of `lib/cardio/`; the fifth mis-homed module, see the comment below
+
+*New (commit 2):*
+
+- `app/components/dashboard-chrome/period-picker.tsx` — `PeriodPicker`, `DASHBOARD_PERIODS`, `DashboardPeriod`, `PERIOD_LABELS`
+- `app/components/dashboard-chrome/stat-card-grid.tsx` — `StatCardGrid`, `StatCard`
+- `lib/series.ts` + `lib/series.test.ts` — 13 tests
+- `lib/format-stat-value.ts` + `lib/format-stat-value.test.ts` — 5 tests
+
+*Changed:*
+
+- `lib/analytics/types.ts` — the preset list, union type and labels deleted
+- `lib/analytics/build-analytics-view.ts`, `lib/cardio/build-cardio-view.ts` — import the series helpers; `max`/`unique` and `min` respectively stay local
+- `app/components/analytics/stat-cards.tsx`, `app/components/cardio/cardio-stat-cards.tsx` — wrappers over `StatCardGrid`, each keeping its own `describe()`
+- `app/components/analytics/analytics-dashboard.tsx`, `app/components/cardio/cardio-dashboard.tsx` — render `PeriodPicker`
+- `app/muscles/page.tsx`, and the four chart components — import paths only
+
 
 ## Agent Brief
 
@@ -67,16 +92,16 @@ Applying that rule end to end:
 
 **Acceptance criteria:**
 
-- [ ] No module under a feature folder is imported by a different feature.
-- [ ] Nothing in `lib/` imports the dashboard preset list, its union type, or the labels — they are UI vocabulary and live in the UI.
-- [ ] Neither the preset list nor its union type has a name containing "analytics".
-- [ ] The card-grid markup, the `excluded > 0` footnote block and `format()` each exist exactly once.
-- [ ] `normalizeDate`, `orderByDate`, `sum` and `round` each exist exactly once and are imported by both view builders.
-- [ ] `min`, `max` and `unique` are untouched — one caller each.
-- [ ] The series helpers and the stat-value formatter have direct unit tests. This is a coverage *increase*: all five have zero direct tests today.
-- [ ] `npm run typecheck`, `npm test` and `npm run build` all pass. `npm run lint` reports only the pre-existing `no-explicit-any` in the Notion client.
-- [ ] `/analytics` and `/cardio` render identically to before — same cards, same numbers, same footnotes, same panels, same colours.
-- [ ] Delivered as two commits: pure moves and renames first (imports updated, no behaviour touched, so git reads it as renames), then the extractions and their tests.
+- [x] No module under a feature folder is imported by a different feature.
+- [x] Nothing in `lib/` imports the dashboard preset list, its union type, or the labels — they are UI vocabulary and live in the UI.
+- [x] Neither the preset list nor its union type has a name containing "analytics".
+- [x] The card-grid markup, the `excluded > 0` footnote block and `format()` each exist exactly once.
+- [x] `normalizeDate`, `orderByDate`, `sum` and `round` each exist exactly once and are imported by both view builders.
+- [x] `min`, `max` and `unique` are untouched — one caller each.
+- [x] The series helpers and the stat-value formatter have direct unit tests. This is a coverage *increase*: all five have zero direct tests today.
+- [x] `npm run typecheck`, `npm test` and `npm run build` all pass. `npm run lint` reports only the pre-existing `no-explicit-any` in the Notion client.
+- [x] `/analytics` and `/cardio` render identically to before — same cards, same numbers, same footnotes, same panels, same colours.
+- [x] Delivered as two commits: pure moves and renames first (imports updated, no behaviour touched, so git reads it as renames), then the extractions and their tests.
 - [x] ~~Ticket 02's file list is amended for the `filterByDateRange` move, in this ticket's work.~~ Moot as of 2026-09-08: ticket 02 shipped first and is `done`. It never touched `filter-by-date-range.ts` — by the time it was picked up, that file had already been retyped against `DateRangeValue` and no longer restated `7 | 30 | 90`, so the move cannot invalidate anything in it.
 
 **Out of scope:**
@@ -90,6 +115,16 @@ Applying that rule end to end:
 - **`formatPace`.** Cardio-only, so by the rule above it stays in the cardio folder.
 
 ## Comments
+
+- 2026-09-08: Implemented in two commits, as asked. `/code-review` run on both axes before the second was finalised; the Spec axis found nothing, and three Standards findings were folded in.
+
+  **The control is `PeriodPicker`, not `RangePicker`.** The one deliberate deviation from this brief. `CONTEXT.md` names the four chrome pieces — "the panel frame, the stat-card grid, the period control, the chart palette" — and three of them landed on their glossary terms while the fourth did not; the same entry reserves "range" for `/muscles` (`MuscleRange`) and marks "period control" as the phrase that *belongs to dashboard chrome*. `RangePicker` sitting beside `RangeSelector` is the conflation `docs/adr/0002` exists to prevent, so the component, its presets (`DASHBOARD_PERIODS`), its union (`DashboardPeriod`) and its labels (`PERIOD_LABELS`) all say "period". No acceptance criterion named the component, and the one that did constrain the names — no "analytics" in them — still holds.
+
+  **A fifth mis-homed module.** The table above lists four, but `lib/analytics/build-analytics-view.ts` already imported `isCardioRecord` from `lib/cardio/`, so the first acceptance criterion could not pass without moving it to `lib/`. The rule was taken as binding over the table's count.
+
+  **The `excluded > 0` guard still appears twice**, in the two wrappers, though the footnote `<p>` block exists once. That is Desired behavior's "each dashboard … writes its own exclusion sentence" rather than a missed dedupe: a sentence written only when there is something to exclude needs the condition beside the sentence.
+
+  Two smaller review fixes went in: the stat-value formatter's doc comment no longer explains itself through cardio's run count (a `lib/` util documenting one dashboard's UI decision), and `PERIOD_LABELS` is keyed to the union rather than `Record<string, string>`, so a preset added without a label is now a type error. Left alone deliberately: `PeriodPicker`'s `periods`/`labels` props, which Key interfaces prescribes, and `StatCardGrid`'s `footnote?: ReactNode`, which is wider than both callers need but is the honest type for a slot.
 
 - 2026-09-08: Ticket 02 shipped ahead of this one. It added `MUSCLE_RANGES`, a derived `DateRange` and `parseDateRange` to `types/date-range.ts`, and `RangeSelector` now imports the presets instead of restating them — both files this ticket lists as 02's to own, so nothing here is blocked. Note for whoever picks this up: 02 applied this ticket's rule and landed the muscle presets in `types/`, not beside their component, on the grounds that the rule's criterion names `lib/` (which `types/` is not) and that splitting the preset array from the union type it defines would reintroduce drift. If `RangePicker` ends up wanting the same shape, follow `types/date-range.ts` rather than the letter of the "preset lists live in the UI" phrasing.
 - 2026-09-07: Triaged and grilled (14 questions). Category `enhancement`, moved `needs-triage` to `ready-for-agent`. Redundancy check: none of this exists yet. No `.out-of-scope/` in this repo, so no prior rejection to match against. The grilling widened the ticket from three clones to a folder reorganisation, on the finding that four modules were *already* shared across feature boundaries — deduplicating without fixing that would have added a fifth. Two decisions went against the recommendation: the options types stay literal, and the `Cardio` prefix stays. `docs/adr/0002` was written so the two range controls are not "fixed" into one later, and `CONTEXT.md` gained **Dashboard** and **Dashboard chrome**.
