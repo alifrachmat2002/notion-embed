@@ -18,7 +18,7 @@ import {
     STRENGTH_INDEX,
     shortDate,
     tooltipStyle,
-} from "./chart-theme";
+} from "../dashboard-chrome/chart-theme";
 
 export function WeightChart({ data }: { data: WeightPoint[] }) {
     return (

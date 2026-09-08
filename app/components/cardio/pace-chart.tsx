@@ -18,7 +18,7 @@ import {
     PACE,
     shortDate,
     tooltipStyle,
-} from "../analytics/chart-theme";
+} from "../dashboard-chrome/chart-theme";
 
 type Mark = PacePoint & { t: number };
 

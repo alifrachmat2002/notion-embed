@@ -1,8 +1,8 @@
-import { filterByDateRange } from "@/lib/muscles/filter-by-date-range";
+import { filterByDateRange } from "@/lib/filter-by-date-range";
+import { isCardioRecord } from "@/lib/is-cardio";
 import { workoutsToCalendarData } from "@/lib/transform";
 import { DateRangeValue } from "@/types/date-range";
 import { WorkoutEntry } from "@/types/workout";
-import { isCardioRecord } from "./is-cardio";
 import {
     CardioExclusions,
     CardioOptions,

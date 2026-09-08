@@ -10,7 +10,7 @@ import {
     YAxis,
 } from "recharts";
 import { ExerciseKind, VolumePoint } from "@/lib/analytics/types";
-import { AXIS, GRID, VOLUME, shortDate, tooltipStyle } from "./chart-theme";
+import { AXIS, GRID, VOLUME, shortDate, tooltipStyle } from "../dashboard-chrome/chart-theme";
 
 export function VolumeChart({
     data,

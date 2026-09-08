@@ -1,7 +1,7 @@
 import { MuscleHeatmap } from "../components/muscles/MuscleHeatmap";
 import { getWorkouts } from "@/lib/notion";
 import { calculateMuscleVolume } from "@/lib/muscles/calculate-muscle-volume";
-import { filterByDateRange } from "@/lib/muscles/filter-by-date-range";
+import { filterByDateRange } from "@/lib/filter-by-date-range";
 import { parseDateRange } from "@/types/date-range";
 import { RangeSelector } from "../components/range-selector";
 import ManualRefreshButton from "../components/manual-refresh-button";

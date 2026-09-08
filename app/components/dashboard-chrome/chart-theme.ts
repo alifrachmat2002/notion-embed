@@ -1,4 +1,11 @@
-/** Shared chart styling, matched to the activity calendar's dark palette. */
+/**
+ * Shared chart styling, matched to the activity calendar's dark palette.
+ *
+ * One palette for both dashboards on purpose, not an accident of `/cardio`
+ * having been written second: PACE and STRENGTH_INDEX are picked against each
+ * other, and splitting this per feature would let two charts a reader compares
+ * side by side drift onto colours chosen in isolation.
+ */
 
 export const AXIS = "#8b949e";
 export const GRID = "#2a2a2c";

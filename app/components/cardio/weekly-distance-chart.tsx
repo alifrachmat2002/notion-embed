@@ -16,7 +16,7 @@ import {
     WEEKLY_DISTANCE,
     shortDate,
     tooltipStyle,
-} from "../analytics/chart-theme";
+} from "../dashboard-chrome/chart-theme";
 
 /**
  * Kilometres per week. Weeks with no runs are drawn as empty columns rather

@@ -10,9 +10,9 @@ import {
 } from "@/lib/analytics/types";
 import { WorkoutEntry } from "@/types/workout";
 import ActivityCalendarWrapper from "../activity-calendar-wrapper";
-import { CalendarYearPicker } from "../calendar-year-picker";
-import { useCalendarYear } from "../use-calendar-year";
-import { Panel } from "./panel";
+import { CalendarYearPicker } from "../dashboard-chrome/calendar-year-picker";
+import { Panel } from "../dashboard-chrome/panel";
+import { useCalendarYear } from "../dashboard-chrome/use-calendar-year";
 import { RepChart } from "./rep-chart";
 import { StatCards } from "./stat-cards";
 import { VolumeChart } from "./volume-chart";
