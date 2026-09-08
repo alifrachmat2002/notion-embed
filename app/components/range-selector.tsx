@@ -1,15 +1,14 @@
 import Link from "next/link";
+import { MUSCLE_RANGES, MuscleRange } from "@/types/date-range";
 
 type Props = {
-    selected: 7 | 30 | 90;
+    selected: MuscleRange;
 };
 
 export function RangeSelector({ selected }: Props) {
-    const ranges = [7, 30, 90] as const;
-
     return (
         <div className="fixed top-0 left-9 z-50 flex gap-1">
-            {ranges.map((range) => {
+            {MUSCLE_RANGES.map((range) => {
                 const active = selected === range;
 
                 return (

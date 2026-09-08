@@ -18,6 +18,10 @@ _Avoid_: "activity calendar" outside the rendering layer, "contributions" (GitHu
 **Selected year**:
 Which calendar year a consistency calendar is showing. Every view defaults to the current one and offers the five most recent to choose from. Early in a year the default grid is empty or nearly so; that is a true report of the training done that year, not a fault.
 
+**Muscle range / `MuscleRange`**:
+Which of the three periods `/muscles` offers — 7, 30 or 90 days back from today — the heatmap is showing. Carried in `?range=`, defaulting to 7; a request for any other number falls back to the default rather than erroring, because `/muscles` is an embed.
+_Avoid_: "period control" for its selector (that phrase belongs to dashboard chrome, and `/muscles` is not a dashboard — see `docs/adr/0002`); "date range", which is `DateRangeValue`, the wider type `lib/` filters by and which admits any day count.
+
 **Activity calendar**:
 The rendering-layer name for the same grid — the `ActivityCalendarWrapper` component and the underlying `react-activity-calendar` library both use this word. Fine at that layer; not the term to reach for anywhere else.
 

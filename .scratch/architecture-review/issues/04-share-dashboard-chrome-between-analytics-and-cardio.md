@@ -77,7 +77,7 @@ Applying that rule end to end:
 - [ ] `npm run typecheck`, `npm test` and `npm run build` all pass. `npm run lint` reports only the pre-existing `no-explicit-any` in the Notion client.
 - [ ] `/analytics` and `/cardio` render identically to before — same cards, same numbers, same footnotes, same panels, same colours.
 - [ ] Delivered as two commits: pure moves and renames first (imports updated, no behaviour touched, so git reads it as renames), then the extractions and their tests.
-- [ ] Ticket 02's file list is amended for the `filterByDateRange` move, in this ticket's work.
+- [x] ~~Ticket 02's file list is amended for the `filterByDateRange` move, in this ticket's work.~~ Moot as of 2026-09-08: ticket 02 shipped first and is `done`. It never touched `filter-by-date-range.ts` — by the time it was picked up, that file had already been retyped against `DateRangeValue` and no longer restated `7 | 30 | 90`, so the move cannot invalidate anything in it.
 
 **Out of scope:**
 
@@ -91,4 +91,5 @@ Applying that rule end to end:
 
 ## Comments
 
+- 2026-09-08: Ticket 02 shipped ahead of this one. It added `MUSCLE_RANGES`, a derived `DateRange` and `parseDateRange` to `types/date-range.ts`, and `RangeSelector` now imports the presets instead of restating them — both files this ticket lists as 02's to own, so nothing here is blocked. Note for whoever picks this up: 02 applied this ticket's rule and landed the muscle presets in `types/`, not beside their component, on the grounds that the rule's criterion names `lib/` (which `types/` is not) and that splitting the preset array from the union type it defines would reintroduce drift. If `RangePicker` ends up wanting the same shape, follow `types/date-range.ts` rather than the letter of the "preset lists live in the UI" phrasing.
 - 2026-09-07: Triaged and grilled (14 questions). Category `enhancement`, moved `needs-triage` to `ready-for-agent`. Redundancy check: none of this exists yet. No `.out-of-scope/` in this repo, so no prior rejection to match against. The grilling widened the ticket from three clones to a folder reorganisation, on the finding that four modules were *already* shared across feature boundaries — deduplicating without fixing that would have added a fifth. Two decisions went against the recommendation: the options types stay literal, and the `Cardio` prefix stays. `docs/adr/0002` was written so the two range controls are not "fixed" into one later, and `CONTEXT.md` gained **Dashboard** and **Dashboard chrome**.
