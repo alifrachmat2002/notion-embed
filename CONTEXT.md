@@ -11,6 +11,13 @@ _Avoid_: "dashboard" for `/` or `/muscles`; "the analytics page" when both dashb
 **Dashboard chrome**:
 The furniture the dashboards share, as opposed to the figures they show: the panel frame, the stat-card grid, the period control, the chart palette. Chrome belongs to no one dashboard — anything only one of them uses is that dashboard's own, however similar it looks to the other's.
 
+**Run type**:
+What a run was *for*, as tagged on the record: easy, tempo, interval or long. Four of the seven values of Notion's `Workout Type` column; the other three ("Upper Body", "Lower Body", "Full Body") tag strength work. The pace chart draws one series per run type, because pace alone cannot separate a good easy run from a poor tempo one at the same minutes per kilometre.
+_Avoid_: "workout type" for the cardio subset — that is the whole column, strength values included, and is the name of the field on `WorkoutEntry`; "run kind"; "session type".
+
+**Unspecified run**:
+A run the tag cannot explain: one logged before the column was used, or one carrying a strength value by mis-entry. Collected into a single grey series rather than given one of its own, because a strength label in a running chart's legend says nothing true. Not a run type; an admission that the type is unknown.
+
 **Consistency calendar**:
 The GitHub-style day-grid showing training frequency across one calendar year, as the user sees it — `/`'s heading is unlabelled, `/analytics` and `/cardio` both title it "Consistency". Always a whole named year, January to December; never a rolling window.
 _Avoid_: "activity calendar" outside the rendering layer, "contributions" (GitHub's word; means nothing in a fitness log), "the last year" for its window (it shows a year, not a trailing period).

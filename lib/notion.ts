@@ -18,9 +18,13 @@ function parseTitle(property: TitleProperty | undefined): string {
 // in the timed-hold and missing-rep artifacts that lib/analytics filters out.
 // Both quantities are recomputed there instead, after hygiene filtering.
 //
-// `RPE`, `Cardio Type` and `Workout Type` are not read either. Across the whole
-// log RPE is empty on every record, and the other two carry a single value
-// ("Running", "Easy Run"), so reading them would add fields no view can use.
+// `RPE` and `Cardio Type` are not read. Across the whole log RPE is empty on
+// every record and Cardio Type carries a single value ("Running"), so reading
+// them would add fields no view can use.
+//
+// `Workout Type` used to be skipped for the same reason, and no longer is: it
+// now distinguishes Easy Run, Tempo Run, Interval and Long Run, which is what
+// the pace chart colours its marks by.
 export function parseWorkoutPage(page: any): WorkoutEntry | null {
     const date = page.properties.Date.date?.start;
 
@@ -40,6 +44,7 @@ export function parseWorkoutPage(page: any): WorkoutEntry | null {
         reps: page.properties.Reps.number,
         distanceKm: page.properties["Distance (km)"].number,
         durationMin: page.properties["Duration(min)"].number,
+        workoutType: page.properties["Workout Type"].select?.name ?? null,
     };
 }
 

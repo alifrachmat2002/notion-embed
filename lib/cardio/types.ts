@@ -7,6 +7,8 @@ export type CardioRun = {
     date: string;
     distanceKm: number;
     durationMin: number;
+    /** The entry-time tag, verbatim. Null on runs logged without one. */
+    workoutType: string | null;
 };
 
 /** One run, plotted against the date it was logged. */
@@ -23,6 +25,14 @@ export type PacePoint = {
      */
     distanceKm: number;
     durationMin: number;
+    /**
+     * What the run was *for*, as tagged in Notion, carried verbatim — including
+     * a strength tag left on a run by mis-entry. The chart draws one series per
+     * run type, which is the only way intent reaches the reader: two runs at
+     * the same pace can be a good easy run and a poor tempo one. Null on
+     * untagged runs. `runTypeLabel` decides what any given value is called.
+     */
+    workoutType: string | null;
 };
 
 /** A Monday-anchored week. Weeks with no runs are present and zeroed. */

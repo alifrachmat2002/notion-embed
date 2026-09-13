@@ -69,6 +69,7 @@ function toCardioRun(workout: WorkoutEntry): CardioRun {
         date: normalizeDate(workout.date),
         distanceKm: workout.distanceKm ?? 0,
         durationMin: workout.durationMin ?? 0,
+        workoutType: workout.workoutType,
     };
 }
 
@@ -82,6 +83,7 @@ function toPacePoint(run: CardioRun): PacePoint {
         paceMinPerKm: paceOf(run),
         distanceKm: run.distanceKm,
         durationMin: run.durationMin,
+        workoutType: run.workoutType,
     };
 }
 
