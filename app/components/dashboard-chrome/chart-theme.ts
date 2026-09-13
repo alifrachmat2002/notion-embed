@@ -21,8 +21,15 @@ const BRIGHT_GREEN = "#39d353";
 const GREEN = "#26a641";
 const BLUE = "#58a6ff";
 const AMBER = "#d29922";
+const PINK = "#f778ba";
 const VIOLET = "#a371f7";
-const RED = "#ff7b72";
+const SALMON = "#ff7b72";
+
+// Picked for the pace scatter against the four already above it — see
+// RUN_TYPE_COLOURS for why these three and not the nearer neighbours.
+const YELLOW = "#e3b341";
+const CRIMSON = "#f85149";
+const CYAN = "#5ad6e1";
 
 export const MAX_WEIGHT = BRIGHT_GREEN;
 export const STRENGTH_INDEX = BLUE;
@@ -40,9 +47,9 @@ const WEIGHT_COLOURS = [
     BRIGHT_GREEN,
     BLUE,
     AMBER,
-    "#f778ba",
+    PINK,
     VIOLET,
-    RED,
+    SALMON,
 ];
 
 export function weightColour(index: number): string {
@@ -57,22 +64,33 @@ export function weightColour(index: number): string {
  * contains — `weightColour` can be positional because a weight's rank among the
  * weights lifted is itself stable, and a run type's rank is not.
  *
- * `Easy Run` takes PACE, the colour every mark on this chart wore when it drew
- * one series: the common case looks unchanged and the other types read as
- * departures from it. Tempo and Interval warm with intensity. Long Run is not
- * more intense, only longer, so it steps off that scale to violet rather than
- * taking a green that would collide with the WEEKLY_DISTANCE bars sitting
- * directly beneath it on the same dashboard. Unspecified takes the axis grey,
- * so a run whose tag says nothing recedes instead of competing.
+ * The split is cool-for-steady, warm-for-hard: `Easy Run` and `Long Run` are
+ * both aerobic and sit on blue and cyan; `Tempo Run` and `Interval` are the
+ * sessions that hurt, and warm with intensity from yellow to crimson.
+ * `Unspecified` takes the axis grey, so a run whose tag says nothing recedes
+ * instead of competing.
+ *
+ * The exact steps are measured, not chosen by eye, against the dark surface:
+ *
+ * - `Easy Run` keeps PACE, the colour every mark wore when this drew one
+ *   series, so the common case looks unchanged.
+ * - `Long Run` is cyan because the violet it replaced collapsed to ΔE 5.8
+ *   against PACE for deuteranopes — the one comparison this chart exists to
+ *   support. Cyan holds ΔE >= 14.7 across normal, protan and deutan vision and
+ *   contrasts 9.8:1 with the surface, against violet's 5.1:1.
+ * - `Interval` is crimson, not the salmon first tried, which sat ΔE 14.0 from
+ *   `Tempo Run` in normal vision — under the 15 floor, and 5.9 for deutan.
+ * - Green is unavailable at any step: the weekly-distance bars and the
+ *   consistency calendar have it on the same page.
  *
  * Typed by `PaceSeriesLabel`, so adding a run type is a compile error here
  * until it is given a colour.
  */
 const RUN_TYPE_COLOURS: Record<PaceSeriesLabel, string> = {
     "Easy Run": PACE,
-    "Tempo Run": AMBER,
-    Interval: RED,
-    "Long Run": VIOLET,
+    "Tempo Run": YELLOW,
+    Interval: CRIMSON,
+    "Long Run": CYAN,
     [UNSPECIFIED_RUN]: AXIS,
 };
 

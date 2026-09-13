@@ -76,7 +76,40 @@ has to go with the change, not after it.
   violet now: a long run is not more intense, only longer, so it steps off the
   warm intensity scale rather than sitting at the top of it.
 
+## Palette, measured
+
+The first pass picked colours by eye and got the most important pair wrong.
+Re-run through a CVD/contrast validator against the `#1c1c1e` surface:
+
+| Run type | Colour | |
+|---|---|---|
+| Easy Run | `#58a6ff` PACE | unchanged — 28 of 31 marks keep the colour they had |
+| Tempo Run | `#e3b341` yellow | was `#d29922`; salmon/amber sat under the floor |
+| Interval | `#f85149` crimson | was `#ff7b72` |
+| Long Run | `#5ad6e1` cyan | was `#a371f7` violet |
+| Unspecified | `#8b949e` AXIS | unchanged |
+
+Cool for steady, warm for hard: Easy and Long are both aerobic and take blue
+and cyan; Tempo and Interval are the sessions that hurt and warm with intensity.
+
+What the numbers changed:
+
+- **Violet failed the comparison the chart exists for.** `Long Run` against
+  `Easy Run` was ΔE 5.8 for deuteranopes. Cyan holds >= 14.7 across normal,
+  protan and deutan, and contrasts 9.8:1 with the surface against violet's
+  5.1:1. Contrast was the stated requirement and cyan wins it outright.
+- **Salmon vs amber was under the floor too** — ΔE 14.0 in normal vision
+  (floor 15) and 5.9 for deutan. Yellow vs crimson clears both at 12.3 deutan.
+- Green is unavailable at any step: the weekly-distance bars and the
+  consistency calendar already hold it on the same page.
+
+Remaining validator complaint is the **lightness band**: `#58a6ff` sits at
+L 0.715 where the dark band wants [0.48, 0.67]. That is the app's existing
+palette, shared with `/analytics` and the calendar, not something this ticket
+introduced — fixing it means restyling every chart and belongs in its own.
+
 ## Left undone
+
 
 - `lib/notion.ts` trips `@typescript-eslint/no-explicit-any` on
   `parseWorkoutPage(page: any)`. It predates this change (line 24 at
