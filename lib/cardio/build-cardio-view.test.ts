@@ -17,6 +17,7 @@ function run(overrides: Partial<WorkoutEntry> = {}): WorkoutEntry {
         reps: null,
         distanceKm: 4,
         durationMin: 30.88,
+        workoutType: "Easy Run",
         ...overrides,
     };
 }
@@ -33,6 +34,7 @@ function lift(overrides: Partial<WorkoutEntry> = {}): WorkoutEntry {
         reps: 12,
         distanceKm: null,
         durationMin: null,
+        workoutType: "Lower Body",
         ...overrides,
     };
 }
@@ -76,6 +78,7 @@ describe("pace", () => {
                 paceMinPerKm: 7.72,
                 distanceKm: 4,
                 durationMin: 30.88,
+                workoutType: "Easy Run",
             },
         ]);
     });
@@ -344,5 +347,28 @@ describe("consistency calendar", () => {
         expect(
             result.calendar.find((day) => day.date === "2026-08-01")?.count,
         ).toBe(1);
+    });
+});
+
+describe("what a pace point carries", () => {
+    /**
+     * The chart splits its marks into one series per workout type, so the tag
+     * has to reach the point. Without it every run draws in one colour and an
+     * interval session is indistinguishable from an easy run at the same pace.
+     */
+    it("carries the workout type the run was tagged with", () => {
+        const points = view([
+            run({ date: "2026-08-01" }),
+            run({ date: "2026-08-03", workoutType: "Long Run" }),
+        ]).pacePoints;
+
+        expect(points.map((point) => point.workoutType)).toEqual([
+            "Easy Run",
+            "Long Run",
+        ]);
+    });
+
+    it("carries an untagged run's missing type through as null", () => {
+        expect(view([run({ workoutType: null })]).pacePoints[0].workoutType).toBeNull();
     });
 });

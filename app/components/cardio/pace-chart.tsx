@@ -2,6 +2,7 @@
 
 import {
     CartesianGrid,
+    Legend,
     ResponsiveContainer,
     Scatter,
     ScatterChart,
@@ -11,11 +12,12 @@ import {
     ZAxis,
 } from "recharts";
 import { formatPace } from "@/lib/cardio/format-pace";
+import { runTypeLabel, toPaceSeries } from "@/lib/cardio/pace-series";
 import { PacePoint } from "@/lib/cardio/types";
 import {
     AXIS,
     GRID,
-    PACE,
+    runTypeColour,
     shortDate,
     tooltipStyle,
 } from "../dashboard-chrome/chart-theme";
@@ -23,26 +25,24 @@ import {
 type Mark = PacePoint & { t: number };
 
 /**
- * Pace over time, with run length encoded as mark size.
+ * Pace over time, coloured by run type, with run length encoded as mark size.
  *
- * Two things would mislead if left alone. Pace is minutes per kilometre, so
+ * Three things would mislead if left alone. Pace is minutes per kilometre, so
  * lower is faster — the axis is inverted to keep a rising chart meaning
- * progress, as it does everywhere else in the app. And runs alternate roughly
- * 4 km and 7 km, where the longer run is always the slower one; sizing the
- * marks by distance lets "slower because further" be read off the chart rather
- * than mistaken for a bad week.
+ * progress, as it does everywhere else in the app. Runs alternate roughly 4 km
+ * and 7 km, where the longer run is always the slower one; sizing the marks by
+ * distance lets "slower because further" be read off the chart rather than
+ * mistaken for a bad week. And a run has an *intent* — easy, tempo, interval,
+ * long — which pace alone hides: two marks at the same height can be a good
+ * easy run and a poor tempo one, so colour carries the tag.
  *
- * Unlike the rep scatter this draws a single series. That chart splits by
- * weight because weights are genuinely discrete (5, 6.5, 7); distances are
- * continuous (3.53 … 7.00) and would yield a dozen near-identical series.
+ * Splitting on the tag rather than on distance is the point. An earlier version
+ * drew one series because bucketing a continuous distance would have invented a
+ * dozen near-identical groups; the workout type is already discrete, already
+ * recorded, and says what the distance only implied.
  */
 export function PaceChart({ data }: { data: PacePoint[] }) {
-    const marks = data.map(
-        (point): Mark => ({
-            ...point,
-            t: Date.parse(`${point.date}T00:00:00Z`),
-        }),
-    );
+    const series = toPaceSeries(data);
 
     return (
         <ResponsiveContainer width="100%" height={240}>
@@ -95,11 +95,36 @@ export function PaceChart({ data }: { data: PacePoint[] }) {
                                     {mark.distanceKm} km in{" "}
                                     {Math.round(mark.durationMin)} min
                                 </p>
+                                {/* Named here as well as in the legend: the
+                                    legend is suppressed when the period holds
+                                    one type, and the tag would then be
+                                    readable nowhere on the chart. */}
+                                <p className="mt-0.5 text-white/50">
+                                    {runTypeLabel(mark.workoutType)}
+                                </p>
                             </div>
                         );
                     }}
                 />
-                <Scatter name="Pace" data={marks} fill={PACE} />
+                {/* One type is the whole chart; a one-row legend labels nothing
+                    the panel hint has not already said. Matches RepChart. */}
+                {series.length > 1 && (
+                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                )}
+
+                {series.map(({ label, points }) => (
+                    <Scatter
+                        key={label}
+                        name={label}
+                        data={points.map(
+                            (point): Mark => ({
+                                ...point,
+                                t: Date.parse(`${point.date}T00:00:00Z`),
+                            }),
+                        )}
+                        fill={runTypeColour(label)}
+                    />
+                ))}
             </ScatterChart>
         </ResponsiveContainer>
     );

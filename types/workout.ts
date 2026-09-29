@@ -15,4 +15,11 @@ export type WorkoutEntry = {
      * (a 40-second hold logs 0.67), so it never identifies a record as a run.
      */
     durationMin: number | null;
+    /**
+     * How the session was tagged at entry: "Easy Run", "Tempo Run", "Interval",
+     * "Long Run" for cardio, or a body-part split for strength. Null on records
+     * logged before the column was used, and the pace chart treats an
+     * unrecognised value the same as an absent one.
+     */
+    workoutType: string | null;
 };

@@ -59,7 +59,7 @@ export default function CardioDashboard({
 
             <Panel
                 title="Pace Progression"
-                hint="Minutes per kilometre, plotted so higher is faster. Larger marks are longer runs — a long run is slower by nature, not a worse one."
+                hint="Minutes per kilometre, plotted so higher is faster. Colour is what the run was for, and larger marks are longer runs — a long run is slower by nature, not a worse one."
                 empty={chartsEmpty}
             >
                 <PaceChart data={view.pacePoints} />

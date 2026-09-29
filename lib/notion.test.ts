@@ -22,6 +22,7 @@ function page(overrides: Record<string, unknown> = {}) {
             Reps: { number: 40 },
             "Distance (km)": { number: null },
             "Duration(min)": { number: null },
+            "Workout Type": { select: { name: "Upper Body" } },
             ...overrides,
         },
     };
@@ -40,7 +41,28 @@ describe("parseWorkoutPage", () => {
             reps: 40,
             distanceKm: null,
             durationMin: null,
+            workoutType: "Upper Body",
         });
+    });
+
+    /**
+     * The pace chart colours its marks by this, so a run's intent — easy,
+     * tempo, interval, long — has to survive the parse. It was deliberately
+     * skipped while the column held one value; it now holds seven.
+     */
+    it("reads the workout type a run was tagged with", () => {
+        const parsed = parseWorkoutPage(
+            page({ "Workout Type": { select: { name: "Long Run" } } }),
+        );
+
+        expect(parsed?.workoutType).toBe("Long Run");
+    });
+
+    it("keeps an untagged workout type distinguishable as null", () => {
+        expect(
+            parseWorkoutPage(page({ "Workout Type": { select: null } }))
+                ?.workoutType,
+        ).toBeNull();
     });
 
     it("reads the distance and duration a run records", () => {
