@@ -17,13 +17,13 @@ export function RangeSelector({ selected }: Props) {
                         href={`?range=${range}`}
                         className={[
                             "flex h-8 min-w-8 items-center justify-center rounded-md",
-                            "border border-white/10",
+                            "border border-border",
                             "bg-transparent backdrop-blur",
                             "text-sm transition",
 
                             active
-                                ? "bg-white/10 text-white"
-                                : "text-white/60 hover:bg-black/70 hover:text-white",
+                                ? "bg-active-wash text-strong"
+                                : "text-muted hover:bg-hover-wash hover:text-strong",
                         ].join(" ")}
                     >
                         {range}D

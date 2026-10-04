@@ -31,13 +31,13 @@ export function YearSelector({ years, selected }: Props) {
                         aria-current={active ? "page" : undefined}
                         className={[
                             "flex h-8 items-center justify-center rounded-md px-2",
-                            "border border-white/10",
+                            "border border-border",
                             "bg-transparent backdrop-blur",
                             "text-xs transition",
 
                             active
-                                ? "bg-white/10 text-white"
-                                : "text-white/60 hover:bg-black/70 hover:text-white",
+                                ? "bg-active-wash text-strong"
+                                : "text-muted hover:bg-hover-wash hover:text-strong",
                         ].join(" ")}
                     >
                         {year}
