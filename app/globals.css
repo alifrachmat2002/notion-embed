@@ -18,6 +18,11 @@
   --muted-strong: rgba(255, 255, 255, 0.75);
   --hover-wash: rgba(0, 0, 0, 0.7);
   --active-wash: rgba(255, 255, 255, 0.1);
+  --soft-wash: rgba(255, 255, 255, 0.05);
+  --panel: rgba(255, 255, 255, 0.02);
+  --control: #1c1c1e;
+  --faint: rgba(255, 255, 255, 0.4);
+  --dim: rgba(255, 255, 255, 0.5);
   --accent: #34d399;
   --body-base: #d1c4b8; /* untrained muscle on /muscles */
 
@@ -40,6 +45,11 @@
     --muted-strong: rgba(55, 53, 47, 0.8);
     --hover-wash: rgba(55, 53, 47, 0.05);
     --active-wash: rgba(55, 53, 47, 0.12);
+    --soft-wash: rgba(55, 53, 47, 0.04);
+    --panel: #f7f7f5;
+    --control: #ffffff;
+    --faint: rgba(55, 53, 47, 0.5);
+    --dim: rgba(55, 53, 47, 0.6);
     --accent: #059669;
     --body-base: #b3a699;
 
@@ -61,6 +71,11 @@
   --color-muted-strong: var(--muted-strong);
   --color-hover-wash: var(--hover-wash);
   --color-active-wash: var(--active-wash);
+  --color-soft-wash: var(--soft-wash);
+  --color-panel: var(--panel);
+  --color-control: var(--control);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
   --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

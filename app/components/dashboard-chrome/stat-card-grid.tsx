@@ -31,13 +31,13 @@ export function StatCardGrid({ cards, footnote }: Props) {
                 {cards.map((card) => (
                     <div
                         key={card.label}
-                        className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
+                        className="rounded-xl border border-border bg-panel px-4 py-3"
                     >
-                        <p className="text-xs text-white/40">{card.label}</p>
-                        <p className="mt-1 text-2xl text-white tabular-nums">
+                        <p className="text-xs text-faint">{card.label}</p>
+                        <p className="mt-1 text-2xl text-strong tabular-nums">
                             {card.value}
                             {card.unit && (
-                                <span className="ml-1 text-sm text-white/40">
+                                <span className="ml-1 text-sm text-faint">
                                     {card.unit}
                                 </span>
                             )}
@@ -47,7 +47,7 @@ export function StatCardGrid({ cards, footnote }: Props) {
             </div>
 
             {footnote && (
-                <p className="mt-2 text-xs text-white/40">{footnote}</p>
+                <p className="mt-2 text-xs text-faint">{footnote}</p>
             )}
         </div>
     );

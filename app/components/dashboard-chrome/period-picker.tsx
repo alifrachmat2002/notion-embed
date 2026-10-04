@@ -44,10 +44,10 @@ export function PeriodPicker({ periods, labels, selected, onChange }: Props) {
                     type="button"
                     onClick={() => onChange(value)}
                     className={[
-                        "h-9 rounded-md border border-white/10 px-3 text-sm transition",
+                        "h-9 rounded-md border border-border px-3 text-sm transition",
                         selected === value
-                            ? "bg-white/10 text-white"
-                            : "text-white/50 hover:bg-white/5 hover:text-white",
+                            ? "bg-active-wash text-strong"
+                            : "text-dim hover:bg-soft-wash hover:text-strong",
                     ].join(" ")}
                 >
                     {labels[`${value}`]}

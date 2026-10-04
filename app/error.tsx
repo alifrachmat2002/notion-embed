@@ -19,7 +19,7 @@ export default function ErrorPage({
             <button
                 type="button"
                 onClick={() => unstable_retry()}
-                className="rounded-md border border-white/10 px-4 py-2 text-sm hover:bg-black/70"
+                className="rounded-md border border-border px-4 py-2 text-sm hover:bg-hover-wash"
             >
                 Try again
             </button>

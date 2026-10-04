@@ -21,19 +21,19 @@ type Props = {
  */
 export function Panel({ title, hint, action, empty, children }: Props) {
     return (
-        <section className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <section className="rounded-xl border border-border bg-panel p-4">
             <header className="mb-3 flex items-start justify-between gap-3">
                 <div>
-                    <h2 className="text-sm font-medium text-white">{title}</h2>
+                    <h2 className="text-sm font-medium text-strong">{title}</h2>
                     {hint && (
-                        <p className="mt-0.5 text-xs text-white/40">{hint}</p>
+                        <p className="mt-0.5 text-xs text-faint">{hint}</p>
                     )}
                 </div>
                 {action && <div className="shrink-0">{action}</div>}
             </header>
 
             {empty ? (
-                <p className="flex h-[220px] items-center justify-center text-center text-sm text-white/35">
+                <p className="flex h-[220px] items-center justify-center text-center text-sm text-faint/90">
                     {empty}
                 </p>
             ) : (

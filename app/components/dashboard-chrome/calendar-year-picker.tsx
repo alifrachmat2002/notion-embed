@@ -26,10 +26,10 @@ export function CalendarYearPicker({ years, selected, onSelect }: Props) {
                         onClick={() => onSelect(year)}
                         aria-pressed={active}
                         className={[
-                            "h-7 rounded-md border border-white/10 px-2 text-xs transition",
+                            "h-7 rounded-md border border-border px-2 text-xs transition",
                             active
-                                ? "bg-white/10 text-white"
-                                : "text-white/50 hover:bg-white/5 hover:text-white",
+                                ? "bg-active-wash text-strong"
+                                : "text-dim hover:bg-soft-wash hover:text-strong",
                         ].join(" ")}
                     >
                         {year}
