@@ -1,22 +1,113 @@
 @import "tailwindcss";
 
+/*
+ * Every themeable colour lives here, dark first. Light values override them
+ * under one prefers-color-scheme block (Notion's light palette), so the
+ * server-rendered HTML is already the right theme on first paint. See
+ * docs/adr/0003.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
+
+  --background: #181818;
+  --foreground: #ededed;
+  --strong: #ffffff;
+  --surface: #171717;
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.6);
+  --muted-strong: rgba(255, 255, 255, 0.75);
+  --hover-wash: rgba(0, 0, 0, 0.7);
+  --active-wash: rgba(255, 255, 255, 0.1);
+  --soft-wash: rgba(255, 255, 255, 0.05);
+  --panel: rgba(255, 255, 255, 0.02);
+  --control: #1c1c1e;
+  --faint: rgba(255, 255, 255, 0.4);
+  --dim: rgba(255, 255, 255, 0.5);
+  --accent: #34d399;
+  --body-base: #d1c4b8; /* untrained muscle on /muscles */
+
+  /* Consistency calendar shading, level 0 (empty) to 4 (heaviest). */
+
+  --chart-axis: #8b949e;
+  --chart-grid: #2a2a2c;
+  --chart-border: rgba(255, 255, 255, 0.08);
+  --chart-bright-green: #39d353;
+  --chart-green: #26a641;
+  --chart-blue: #58a6ff;
+  --chart-amber: #d29922;
+  --chart-pink: #f778ba;
+  --chart-violet: #a371f7;
+  --chart-salmon: #ff7b72;
+  --chart-yellow: #e3b341;
+  --chart-crimson: #f85149;
+  --chart-cyan: #5ad6e1;
+
+  --calendar-0: #2a2a2c;
+  --calendar-1: #0e4429;
+  --calendar-2: #006d32;
+  --calendar-3: #26a641;
+  --calendar-4: #39d353;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #ffffff;
+    --foreground: #37352f;
+    --strong: #37352f;
+    --surface: #f7f7f5;
+    --border: rgba(55, 53, 47, 0.09);
+    --muted: rgba(55, 53, 47, 0.65);
+    --muted-strong: rgba(55, 53, 47, 0.8);
+    --hover-wash: rgba(55, 53, 47, 0.05);
+    --active-wash: rgba(55, 53, 47, 0.12);
+    --soft-wash: rgba(55, 53, 47, 0.04);
+    --panel: #ffffff;
+    --control: #ffffff;
+    --faint: rgba(55, 53, 47, 0.5);
+    --dim: rgba(55, 53, 47, 0.6);
+    --accent: #059669;
+    --body-base: #b3a699;
+
+    --chart-axis: #848d97;
+    --chart-grid: #e9e9e7;
+    --chart-border: rgba(55, 53, 47, 0.09);
+    --chart-bright-green: #2da44e;
+    --chart-green: #1a7f37;
+    --chart-blue: #0969da;
+    --chart-amber: #9a6700;
+    --chart-pink: #bf3989;
+    --chart-violet: #8250df;
+    --chart-salmon: #c4432b;
+    --chart-yellow: #b08400;
+    --chart-crimson: #a40e26;
+    --chart-cyan: #0e7490;
+
+    --calendar-0: #ebedf0;
+    --calendar-1: #9be9a8;
+    --calendar-2: #40c463;
+    --calendar-3: #30a14e;
+    --calendar-4: #216e39;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-strong: var(--strong);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
+  --color-hover-wash: var(--hover-wash);
+  --color-active-wash: var(--active-wash);
+  --color-soft-wash: var(--soft-wash);
+  --color-panel: var(--panel);
+  --color-control: var(--control);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #181818;
-    --foreground: #ededed;
-  }
 }
 
 body {

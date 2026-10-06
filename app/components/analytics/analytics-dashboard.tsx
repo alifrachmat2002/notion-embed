@@ -44,7 +44,7 @@ export default function AnalyticsDashboard({
 
     return (
         <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4 pt-12">
-            <h1 className="text-xs tracking-[0.2em] text-white/40 uppercase">
+            <h1 className="text-xs tracking-[0.2em] text-faint uppercase">
                 Fitness Analytics
             </h1>
 
@@ -52,7 +52,7 @@ export default function AnalyticsDashboard({
                 <select
                     value={view.selected ?? ""}
                     onChange={(event) => setExercise(event.target.value)}
-                    className="h-9 rounded-md border border-white/10 bg-[#1c1c1e] px-3 text-sm text-white"
+                    className="h-9 rounded-md border border-border bg-control px-3 text-sm text-strong"
                     aria-label="Exercise"
                 >
                     {view.exercises.map((option) => (

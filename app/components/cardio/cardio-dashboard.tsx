@@ -42,7 +42,7 @@ export default function CardioDashboard({
 
     return (
         <main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4 pt-12">
-            <h1 className="text-xs tracking-[0.2em] text-white/40 uppercase">
+            <h1 className="text-xs tracking-[0.2em] text-faint uppercase">
                 Cardio Analytics
             </h1>
 

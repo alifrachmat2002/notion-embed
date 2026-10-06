@@ -45,17 +45,17 @@ export function MuscleHeatmap({ heatmap }: Props) {
 
             {tooltip && (
                 <div
-                    className="fixed pointer-events-none z-50 px-3 py-2 rounded-lg shadow-xl text-sm transition-all duration-75 backdrop-blur-md bg-neutral-900/90 border border-neutral-700/40 text-white flex flex-col gap-0.5"
+                    className="fixed pointer-events-none z-50 px-3 py-2 rounded-lg shadow-xl text-sm transition-all duration-75 backdrop-blur-md bg-surface/90 border border-border text-strong flex flex-col gap-0.5"
                     style={{
                         left: `${tooltip.x + 15}px`,
                         top: `${tooltip.y + 15}px`,
                     }}
                 >
-                    <span className="text-[10px] text-neutral-400 font-bold tracking-wider uppercase">
+                    <span className="text-[10px] text-muted font-bold tracking-wider uppercase">
                         {tooltip.name}
                     </span>
-                    <span className="text-xs text-neutral-200">
-                        <span className="font-extrabold text-emerald-400 text-sm mr-1">
+                    <span className="text-xs text-foreground">
+                        <span className="font-extrabold text-accent text-sm mr-1">
                             {tooltip.sets}
                         </span>
                         {tooltip.sets === 1 ? "set" : "sets"}

@@ -46,7 +46,7 @@ export function MuscleBodyMap({ intensity, hoveredMuscle, onHover, onLeave }: Pr
                                     className="transition-all duration-200 cursor-pointer"
                                     style={{
                                         opacity: isDimmed ? 0.35 : 1,
-                                        stroke: isHovered ? "#ffffff" : "none",
+                                        stroke: isHovered ? "var(--strong)" : "none",
                                         strokeWidth: isHovered ? 4 : 0,
                                         strokeLinejoin: "round",
                                     }}

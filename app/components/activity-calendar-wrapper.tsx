@@ -5,10 +5,11 @@ import { ActivityCalendar } from "react-activity-calendar";
 import "react-activity-calendar/tooltips.css";
 import { CalendarActivity } from "@/types/calendar";
 
-const theme = {
-    light: ["#2a2a2c", "#0e4429", "#006d32", "#26a641", "#39d353"],
-    dark: ["#2a2a2c", "#0e4429", "#006d32", "#26a641", "#39d353"],
-};
+// Both arrays hold the same `var()` references and the colour scheme stays
+// pinned, so the library never picks a scheme in JS: the stylesheet switches
+// the values (see globals.css and docs/adr/0003).
+const levels = [0, 1, 2, 3, 4].map((level) => `var(--calendar-${level})`);
+const theme = { light: levels, dark: levels };
 
 /**
  * `unit` names what a day's count actually is. The calendar is fed sets by the
