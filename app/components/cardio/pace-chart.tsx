@@ -84,14 +84,14 @@ export function PaceChart({ data }: { data: PacePoint[] }) {
                         const mark = payload[0].payload as Mark;
 
                         return (
-                            <div className="rounded-lg border border-white/10 bg-[#1c1c1e] px-3 py-2 text-xs text-white">
-                                <p className="text-white/50">
+                            <div className="rounded-lg border border-border bg-control px-3 py-2 text-xs text-strong">
+                                <p className="text-dim">
                                     {shortDate(mark.date)}
                                 </p>
                                 <p className="mt-0.5">
                                     {formatPace(mark.paceMinPerKm)} /km
                                 </p>
-                                <p className="text-white/50">
+                                <p className="text-dim">
                                     {mark.distanceKm} km in{" "}
                                     {Math.round(mark.durationMin)} min
                                 </p>
@@ -99,7 +99,7 @@ export function PaceChart({ data }: { data: PacePoint[] }) {
                                     legend is suppressed when the period holds
                                     one type, and the tag would then be
                                     readable nowhere on the chart. */}
-                                <p className="mt-0.5 text-white/50">
+                                <p className="mt-0.5 text-dim">
                                     {runTypeLabel(mark.workoutType)}
                                 </p>
                             </div>

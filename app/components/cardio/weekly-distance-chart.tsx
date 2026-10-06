@@ -51,12 +51,12 @@ export function WeeklyDistanceChart({ data }: { data: WeeklyPoint[] }) {
                         const week = payload[0].payload as WeeklyPoint;
 
                         return (
-                            <div className="rounded-lg border border-white/10 bg-[#1c1c1e] px-3 py-2 text-xs text-white">
-                                <p className="text-white/50">
+                            <div className="rounded-lg border border-border bg-control px-3 py-2 text-xs text-strong">
+                                <p className="text-dim">
                                     Week of {shortDate(week.weekStart)}
                                 </p>
                                 <p className="mt-0.5">{week.km} km</p>
-                                <p className="text-white/50">
+                                <p className="text-dim">
                                     {week.runs} {week.runs === 1 ? "run" : "runs"}
                                     {week.runs > 0 &&
                                         `, ${Math.round(week.minutes)} min`}

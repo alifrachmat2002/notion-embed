@@ -4,7 +4,12 @@ import {
 } from "@/lib/cardio/pace-series";
 
 /**
- * Shared chart styling, matched to the activity calendar's dark palette.
+ * Shared chart styling, matched to the activity calendar's palette.
+ *
+ * Every colour is a `var(--chart-…)` reference: the dark and light values live
+ * in globals.css, swapped by `prefers-color-scheme`, so the server-rendered
+ * SVG is the right theme on first paint (docs/adr/0003). Recharts writes these
+ * strings into fill and stroke attributes, where the browser resolves them.
  *
  * One palette for both dashboards on purpose, not an accident of `/cardio`
  * having been written second: PACE and STRENGTH_INDEX are picked against each
@@ -12,24 +17,24 @@ import {
  * side by side drift onto colours chosen in isolation.
  */
 
-export const AXIS = "#8b949e";
-export const GRID = "#2a2a2c";
-export const SURFACE = "#1c1c1e";
-export const BORDER = "rgba(255,255,255,0.08)";
+export const AXIS = "var(--chart-axis)";
+export const GRID = "var(--chart-grid)";
+export const SURFACE = "var(--control)";
+export const BORDER = "var(--chart-border)";
 
-const BRIGHT_GREEN = "#39d353";
-const GREEN = "#26a641";
-const BLUE = "#58a6ff";
-const AMBER = "#d29922";
-const PINK = "#f778ba";
-const VIOLET = "#a371f7";
-const SALMON = "#ff7b72";
+const BRIGHT_GREEN = "var(--chart-bright-green)";
+const GREEN = "var(--chart-green)";
+const BLUE = "var(--chart-blue)";
+const AMBER = "var(--chart-amber)";
+const PINK = "var(--chart-pink)";
+const VIOLET = "var(--chart-violet)";
+const SALMON = "var(--chart-salmon)";
 
 // Picked for the pace scatter against the four already above it — see
 // RUN_TYPE_COLOURS for why these three and not the nearer neighbours.
-const YELLOW = "#e3b341";
-const CRIMSON = "#f85149";
-const CYAN = "#5ad6e1";
+const YELLOW = "var(--chart-yellow)";
+const CRIMSON = "var(--chart-crimson)";
+const CYAN = "var(--chart-cyan)";
 
 export const MAX_WEIGHT = BRIGHT_GREEN;
 export const STRENGTH_INDEX = BLUE;
@@ -70,7 +75,8 @@ export function weightColour(index: number): string {
  * `Unspecified` takes the axis grey, so a run whose tag says nothing recedes
  * instead of competing.
  *
- * The exact steps are measured, not chosen by eye, against the dark surface:
+ * The exact steps are measured, not chosen by eye, against the dark surface
+ * (#1c1c1e) and, in light mode, the light panel (#f7f7f5):
  *
  * - `Easy Run` keeps PACE, the colour every mark wore when this drew one
  *   series, so the common case looks unchanged.
@@ -82,6 +88,21 @@ export function weightColour(index: number): string {
  *   `Tempo Run` in normal vision — under the 15 floor, and 5.9 for deutan.
  * - Green is unavailable at any step: the weekly-distance bars and the
  *   consistency calendar have it on the same page.
+ *
+ * Light mode keeps each hue family at a darker step. Every pair is ΔE >= 17.3
+ * apart across normal, protan and deutan vision (dark: >= 20.3), and every
+ * series has at least 3:1 against the panel:
+ *
+ * - `Easy Run` #0969da 4.8:1, `Long Run` #0e7490 5.0:1, `Tempo Run` #b08400
+ *   3.2:1, `Interval` #a40e26 7.3:1, `Unspecified` (axis) #848d97 3.1:1.
+ * - `Tempo Run` and `Interval` collapse to ΔE 9.3 for deutan at the obvious
+ *   #9a6700 / #cf222e, because yellow and red differ mostly in lightness
+ *   there; a lighter yellow and a darker crimson open the gap.
+ * - The axis grey is lighter than the obvious #6e7781, which sat ΔE 13.4 from
+ *   `Long Run` under protan.
+ * - The weight colours are #2da44e, #0969da, #9a6700, #bf3989, #8250df and
+ *   #c4432b (3.0:1 to 4.7:1), the first the lightest; weekly distance and
+ *   volume take #1a7f37 (4.7:1).
  *
  * Typed by `PaceSeriesLabel`, so adding a run type is a compile error here
  * until it is given a colour.

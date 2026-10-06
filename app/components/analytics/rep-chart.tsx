@@ -72,8 +72,8 @@ export function RepChart({
                         const mark = payload[0].payload as Mark;
 
                         return (
-                            <div className="rounded-lg border border-white/10 bg-[#1c1c1e] px-3 py-2 text-xs text-white">
-                                <p className="text-white/50">
+                            <div className="rounded-lg border border-border bg-control px-3 py-2 text-xs text-strong">
+                                <p className="text-dim">
                                     {shortDate(mark.date)}
                                 </p>
                                 <p className="mt-0.5">
@@ -81,7 +81,7 @@ export function RepChart({
                                         ? `${mark.reps} reps`
                                         : `${mark.weight} kg × ${mark.reps} reps`}
                                 </p>
-                                <p className="text-white/50">
+                                <p className="text-dim">
                                     {mark.setCount}{" "}
                                     {mark.setCount === 1 ? "set" : "sets"}
                                 </p>

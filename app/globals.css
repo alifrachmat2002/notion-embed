@@ -27,6 +27,21 @@
   --body-base: #d1c4b8; /* untrained muscle on /muscles */
 
   /* Consistency calendar shading, level 0 (empty) to 4 (heaviest). */
+
+  --chart-axis: #8b949e;
+  --chart-grid: #2a2a2c;
+  --chart-border: rgba(255, 255, 255, 0.08);
+  --chart-bright-green: #39d353;
+  --chart-green: #26a641;
+  --chart-blue: #58a6ff;
+  --chart-amber: #d29922;
+  --chart-pink: #f778ba;
+  --chart-violet: #a371f7;
+  --chart-salmon: #ff7b72;
+  --chart-yellow: #e3b341;
+  --chart-crimson: #f85149;
+  --chart-cyan: #5ad6e1;
+
   --calendar-0: #2a2a2c;
   --calendar-1: #0e4429;
   --calendar-2: #006d32;
@@ -52,6 +67,20 @@
     --dim: rgba(55, 53, 47, 0.6);
     --accent: #059669;
     --body-base: #b3a699;
+
+    --chart-axis: #848d97;
+    --chart-grid: #e9e9e7;
+    --chart-border: rgba(55, 53, 47, 0.09);
+    --chart-bright-green: #2da44e;
+    --chart-green: #1a7f37;
+    --chart-blue: #0969da;
+    --chart-amber: #9a6700;
+    --chart-pink: #bf3989;
+    --chart-violet: #8250df;
+    --chart-salmon: #c4432b;
+    --chart-yellow: #b08400;
+    --chart-crimson: #a40e26;
+    --chart-cyan: #0e7490;
 
     --calendar-0: #ebedf0;
     --calendar-1: #9be9a8;
