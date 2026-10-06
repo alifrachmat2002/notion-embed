@@ -76,7 +76,9 @@ export function weightColour(index: number): string {
  * instead of competing.
  *
  * The exact steps are measured, not chosen by eye, against the dark surface
- * (#1c1c1e) and, in light mode, the light panel (#f7f7f5):
+ * (#1c1c1e) and, in light mode, the light panel. The panel is white now; the
+ * contrast figures below were measured on the earlier #f7f7f5 and only rise
+ * on white:
  *
  * - `Easy Run` keeps PACE, the colour every mark wore when this drew one
  *   series, so the common case looks unchanged.
