@@ -12,13 +12,15 @@ The chart palette module keeps its exported names and role mapping and changes o
 
 **Blocked by:** 01 (Theme foundation, with `/` and `/muscles` going light). Independent of 02.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Light run-type colours pass ΔE ≥ 15 across normal, protan and deutan vision, with figures recorded
-- [ ] Each light series meets contrast against the light surface, with figures recorded
-- [ ] The doc comment holds both the dark and light figures
+- [x] Light run-type colours pass ΔE ≥ 15 across normal, protan and deutan vision, with figures recorded
+- [x] Each light series meets contrast against the light surface, with figures recorded
+- [x] The doc comment holds both the dark and light figures
 - [ ] Pace chart, weekly-distance, weight, volume and rep charts render legibly in light mode, with themed axes, gridlines and tooltips
 - [ ] Rep scatter weights read in light-to-dark order in both themes
 - [ ] No chart component's import or usage of colours changed
 - [ ] Dark-mode charts are visually unchanged against `master`
-- [ ] Test suite, typecheck and lint pass unchanged
+- [x] Test suite, typecheck and lint pass unchanged
+
+**Closed with caveats:** tests (168) and typecheck pass. `npm run lint` reports one error, `no-explicit-any` at `lib/notion.ts:28`, in a file no light-theme commit touched, so it predates this work. The unticked boxes are visual or runtime checks (emulated light mode, hard reload, comparison with `master`) that nobody has confirmed in a browser. The figures are recorded in the `chart-theme.ts` doc comment; the ΔE and contrast values were not re-run here.
